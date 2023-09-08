@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function
+from __future__ import print_function, annotations
 import sys, os
 import warnings
 import numpy as np
 import time
 
-
+try:
+    from typing import Union
+    from flare.bffs.gp import GaussianProcess
+    from flare.bffs.sgp import SGP_Wrapper
+except ImportError:
+    pass
 
 """
 This is part of the program python-sscha
@@ -141,6 +146,23 @@ class Ensemble:
         self.pols_0 = None
         self.current_w = None
         self.current_pols = None
+        
+        # On-the-fly key-word.
+        # Eventually it will be best to devise a class for this instead.
+        self.gp_model = None
+        self.flare_calc = None
+        self.std_tolerance = None
+        self.max_atoms_added = None
+        self.update_style = None
+        self.update_threshold = None
+        self.build_mode = None
+        self.output = None
+        self.output_name = None
+        self.checkpt_name = None
+        self.flare_name = None
+        self.atoms_name = None
+        self.checkpt_files = None
+        self.write_model = None
 
         self.sscha_energies = []
         self.sscha_forces = []
@@ -3446,10 +3468,6 @@ DETAILS OF ERROR:
 
             i0 += 1
 
-
-
-
-
         # Collect all togheter
 
         if parallel:
@@ -3481,3 +3499,67 @@ DETAILS OF ERROR:
             self.stress_computed[:] = True
         else:
             self.has_stress = False
+    
+    def set_otf(
+        self,
+        flare_calc,
+        # flare args
+        write_model: int = 0,
+        # otf args
+        std_tolerance_factor: float = 1,
+        output_name: str = "otf_run",
+        max_atoms_added: int = 1,
+        update_style: str = "add_n",
+        update_threshold: float | None = None,
+        # other args
+        build_mode="bayesian",
+    ):
+        """Set on-the-fly training."""
+        from flare.io.output import Output
+        from flare.bffs.gp.calculator import FLARE_Calculator
+        from flare.bffs.sgp.calculator import SGP_Calculator
+
+        if not isinstance(flare_calc, (FLARE_Calculator, SGP_Calculator)):
+            raise ValueError("`flare_calc` must be either a `FLARE_Calculator` or `SGP_Calculator`")
+
+        self.flare_calc = flare_calc
+        self.gp_model = flare_calc.gp_model
+        
+        # set otf
+        self.std_tolerance = std_tolerance_factor
+        self.max_atoms_added = max_atoms_added
+        self.update_style = update_style
+        self.update_threshold = update_threshold
+
+        # other args
+        self.build_mode = build_mode
+
+        if self.build_mode not in ["bayesian", "direct"]:
+            raise Exception("build_mode needs to be 'bayesian' or 'direct'")
+
+        # Sanity check
+        if self.build_mode == "direct":
+            assert (self.update_style is None) and (
+                self.update_threshold is None
+            ), "In 'direct' mode, please set update_style=None, and update_threshold=None"
+
+        if self.update_style == "add_n":
+            assert self.update_threshold is None, (
+                "When update_style='add_n', the update_threshold does not take any effect,"
+                "please set update_threshold=None"
+            )
+
+        # set logger
+        self.output = Output(output_name, always_flush=True, print_as_xyz=True)
+        self.output_name = output_name
+
+        self.checkpt_name = self.output_name + "_checkpt.json"
+        self.flare_name = self.output_name + "_flare.json"
+        self.atoms_name = self.output_name + "_atoms.json"
+        self.checkpt_files = [
+            self.checkpt_name,
+            self.flare_name,
+            self.atoms_name,
+        ]
+
+        self.write_model = write_model

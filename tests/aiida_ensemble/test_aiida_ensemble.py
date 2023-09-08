@@ -48,6 +48,7 @@ def test_submit_and_get_workchains(fixture_code):
         structures=structures, 
         pw_code=pw_code,
         temperature=300,
+        dft_indices=[0,1,2,3,4],
     )
     
     assert len(workchains) == 5
