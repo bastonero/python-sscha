@@ -6,7 +6,8 @@ from ase import Atoms
 from ase.calculators.lj import LennardJones
 
 from flare.atoms import FLARE_Atoms
-from .get_sgp import get_sgp_calc, get_random_atoms
+from flare.bffs.sgp.calculator import SGP_Calculator
+from .get_sgp import get_sgp_calc, get_random_atoms, get_empty_sgp
 
 
 @pytest.fixture
@@ -71,7 +72,8 @@ def test_no_otf(generate_ensemble):
     assert ensemble.flare_name is None
     assert ensemble.atoms_name is None
     assert ensemble.checkpt_files is None
-    assert ensemble.write_model is None
+    assert ensemble.write_model is None 
+    assert ensemble.init_atoms is None 
 
 
 def test_set_otf(generate_ensemble):
@@ -104,7 +106,6 @@ def test_predict_with_model(generate_ensemble):
     
     ensemble._predict_with_model(
         ensemble.structures,
-        ensemble,
         dft_indices
     )
     
@@ -124,11 +125,12 @@ def test_write_model(generate_ensemble):
     
     ensemble._write_model()
 
-
-def test_update_gp(generate_ensemble):
+@pytest.mark.parametrize('flare_calc', (get_sgp_calc(), SGP_Calculator(get_empty_sgp())))
+def test_update_gp(generate_ensemble, flare_calc):
     """Test the :func:`sscha.aiida_ensemble.AiiDAEnsemble._update_gp` method."""
     ensemble = generate_ensemble()
-    ensemble.set_otf(get_sgp_calc(), max_atoms_added=-1)
+    ensemble.set_otf(flare_calc, max_atoms_added=-1)
+    ensemble.init_atoms = [1]
     
     atoms = get_random_atoms()
     atoms.calc = LennardJones()
@@ -143,6 +145,7 @@ def test_update_gp(generate_ensemble):
         stress
     )
 
+    assert len(ensemble.gp_model.training_data) in [1, 2]
 
 def test_train_gp(generate_ensemble):
     """Test the :func:`sscha.aiida_ensemble.AiiDAEnsemble._train_gp` method."""

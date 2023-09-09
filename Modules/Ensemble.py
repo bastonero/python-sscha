@@ -163,6 +163,7 @@ class Ensemble:
         self.atoms_name = None
         self.checkpt_files = None
         self.write_model = None
+        self.init_atoms = None
 
         self.sscha_energies = []
         self.sscha_forces = []
@@ -3505,6 +3506,7 @@ DETAILS OF ERROR:
         flare_calc,
         # flare args
         write_model: int = 0,
+        init_atoms: list[int] | None = None,
         # otf args
         std_tolerance_factor: float = 1,
         output_name: str = "otf_run",
@@ -3514,7 +3516,16 @@ DETAILS OF ERROR:
         # other args
         build_mode="bayesian",
     ):
-        """Set on-the-fly training."""
+        """Set on-the-fly training.
+        
+        Args:
+        ----
+            init_atoms (List[int], optional): List of atoms from the input
+                structure whose local environments and force components are
+                used to train the initial GP model. If None is specified, all
+                atoms are used to train the initial GP. Defaults to None.
+
+        """
         from flare.io.output import Output
         from flare.bffs.gp.calculator import FLARE_Calculator
         from flare.bffs.sgp.calculator import SGP_Calculator
@@ -3524,6 +3535,7 @@ DETAILS OF ERROR:
 
         self.flare_calc = flare_calc
         self.gp_model = flare_calc.gp_model
+        self.init_atoms = init_atoms
         
         # set otf
         self.std_tolerance = std_tolerance_factor
