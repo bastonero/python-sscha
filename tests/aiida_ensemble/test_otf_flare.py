@@ -125,6 +125,7 @@ def test_write_model(generate_ensemble):
     
     ensemble._write_model()
 
+
 @pytest.mark.parametrize('flare_calc', (get_sgp_calc(), SGP_Calculator(get_empty_sgp())))
 def test_update_gp(generate_ensemble, flare_calc):
     """Test the :func:`sscha.aiida_ensemble.AiiDAEnsemble._update_gp` method."""

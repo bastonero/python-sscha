@@ -39,27 +39,30 @@ class AiiDAEnsemble(Ensemble):
         options: dict = None,
         overrides: dict = None,
         group_label: str = None,
+        waiting_time: int = 2.5,
         **kwargs
     ) -> None:
-        """Get ensemble properties.
-
-        All the parameters refer to the
-        :func:`aiida_quantumespresso.workflows.pw.base.PwBaseWorkChain.get_builder_from_protocol`
-        method.
+        """Compute ensemble properties.
 
         Args:
         ----
             pw_code: The string associated with the AiiDA code for `pw.x`
             protocol: The protocol to be used; available protocols are 'fast', 'moderate' and 'precise'
             options: The options for the calculations, such as the resources, wall-time, etc.
-            overrides: The overrides for the get_builder_from_protocol
+            overrides: The overrides for the :func:`aiida_quantumespresso.workflows.pw.base.PwBaseWorkChain.get_builder_from_protocol`
             group_label: The group label where to add the submitted nodes for eventual future inspection
+            waiting_time: Time delay in seconds for WorkChain submission; usefull for many configurations
             kwargs: The kwargs for the get_builder_from_protocol
 
         """
         from aiida.orm import load_group
 
-        group = None if group_label is None else load_group(group_label)
+        try:
+            group = None if group_label is None else load_group(group_label)
+        except: # NotExsistent
+            from aiida.orm import Group
+            group = Group(group_label)
+            group.store()
 
         # Check if not all the calculation needs to be done
         if self.force_computed is None:
@@ -100,6 +103,7 @@ class AiiDAEnsemble(Ensemble):
             protocol=protocol,
             options=options,
             overrides=overrides,
+            waiting_time=waiting_time,
             **kwargs
         )
 
@@ -250,9 +254,12 @@ class AiiDAEnsemble(Ensemble):
         from ase.calculators.singlepoint import SinglePointCalculator
 
         tic = time.time()
-        is_not_empty_model = len(self.gp_model.training_data) > 0
+        is_empty_model = len(self.gp_model.training_data) == 0
         
-        if is_not_empty_model:
+        if is_empty_model:
+            std_in_bound = False
+            train_atoms = self.init_atoms
+        else:
             self._compute_properties(atoms)
 
             # get max uncertainty atoms
@@ -273,15 +280,12 @@ class AiiDAEnsemble(Ensemble):
             )
 
             self.output.write_wall_time(tic, task='Env Selection')
-        else:
-            std_in_bound = False
-            train_atoms = self.init_atoms
 
         # Here we make the decision to skip adding environments even if the
         # DFT calculation was performed. This avoids slowing down the model,
         # while the SSCHA is feeded with the DFT results.
         if not std_in_bound:
-            if is_not_empty_model:
+            if not is_empty_model:
                 stds = self.flare_calc.results.get('stds', np.zeros_like(dft_frcs))
                 self.output.add_atom_info(train_atoms, stds)
 
@@ -396,6 +400,7 @@ def submit_and_get_workchains(
     protocol: str = 'moderate',
     options: dict = None,
     overrides: dict = None,
+    waiting_time: int = 2.5,
     **kwargs
 ) -> list[WorkChainNode]:
     """Submit and return the workchains for a list of :class:`~cellconstructor.Structure.Structure`.
@@ -409,6 +414,7 @@ def submit_and_get_workchains(
         protocol: The protocol to be used; available protocols are 'fast', 'moderate' and 'precise'
         options: The options for the calculations, such as the resources, wall-time, etc.
         overrides: The overrides for the get_builder_from_protocol
+        waiting_time: Time delay in seconds for WorkChain submission; usefull for many configurations
         kwargs: The kwargs for the get_builder_from_protocol
 
     """
@@ -428,5 +434,6 @@ def submit_and_get_workchains(
         builder.metadata.label = f'T_{temperature}_id_{i}'
         workchains.append(submit(builder))
         print(f'Launched <PwBaseWorkChain> with PK={workchains[-1].pk}')
+        time.sleep(waiting_time)
 
     return workchains

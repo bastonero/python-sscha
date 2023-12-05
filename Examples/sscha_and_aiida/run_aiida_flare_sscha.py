@@ -25,7 +25,7 @@ def main():
     """Run with AiiDA-QuantumESPRESSO + FLARE + SSCHA @ NVT."""
     # =========== GENERAL INPUTS =============== #
     np.random.seed(0)
-    number_of_configurations = 8
+    number_of_configurations = 4
     max_iterations = 20
     temperature = 0.0
 
