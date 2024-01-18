@@ -110,6 +110,7 @@ class SSCHA(object):
         # If the ensemble must be saved at each iteration.
         #
         self.save_ensemble = save_ensemble
+        self.save_dyn = True # Save the dynamical matrix at each iteration
         self.data_dir = "data"
 
 
@@ -403,7 +404,7 @@ Error, the specified location to save the ensemble:
                 self.minim.dyn.dynmats[iq] = fcq[iq, :, :]
 
             # Save the dynamical matrix
-            if self.save_ensemble:
+            if self.save_ensemble or self.save_dyn:
                 self.minim.dyn.save_qe("dyn_pop%d_" % pop)
 
             # Check if it is converged
@@ -575,6 +576,7 @@ Error, the specified location to save the ensemble:
             pop = start_pop
         else:
             pop = self.start_pop
+            start_pop = self.start_pop
 
         running = True
         while running:
@@ -582,13 +584,13 @@ Error, the specified location to save the ensemble:
             if kind_minimizer == "RPSD":
                 # Compute the static bulk modulus
                 sbm = GetStaticBulkModulus(self.minim.dyn.structure, self.calc)
-                print ("BM:")
-                print (sbm)
                 BFGS = sscha.Optimizer.SD_PREC_UC(self.minim.dyn.structure.unit_cell, sbm)
 
             # Generate the ensemble
             self.minim.ensemble.dyn_0 = self.minim.dyn.Copy()
             if pop != start_pop or not restart_from_ens:
+                #print("POP:", pop, "START_POP:", start_pop)
+                #print("RESTART_FROM_ENS:", restart_from_ens)
                 self.minim.ensemble.generate(self.N_configs, sobol=sobol, sobol_scramble = sobol_scramble, sobol_scatter = sobol_scatter)
 
                 # Save also the generation
@@ -603,16 +605,15 @@ Error, the specified location to save the ensemble:
                         self.calc, True, stress_numerical, cluster = self.cluster)
                 #self.minim.ensemble.get_energy_forces(self.calc, True, stress_numerical = stress_numerical)
 
-                print("RELAX force length:", len(self.minim.ensemble.force_computed))
                 
                 if ensemble_loc is not None and self.save_ensemble:
                     self.minim.ensemble.save_bin(ensemble_loc, pop)
-                print("RELAX force length:", len(self.minim.ensemble.force_computed))
+
+
 
             self.minim.population = pop
             self.minim.init(delete_previous_data = False)
 
-            print("RELAX force length:", len(self.minim.ensemble.force_computed))
             self.minim.run(custom_function_pre = self.__cfpre__,
                            custom_function_post = self.__cfpost__,
                            custom_function_gradient = self.__cfg__)
@@ -626,8 +627,21 @@ Error, the specified location to save the ensemble:
             stress_tensor *= sscha.SchaMinimizer.__RyBohr3_to_evA3__
             stress_err *=  sscha.SchaMinimizer.__RyBohr3_to_evA3__
 
+            # Check if the stress tensor is actually loaded in the ensemble
+            if np.max(np.abs(self.minim.ensemble.stresses)) < 1e-10:
+                # Probably there is an error in the submission of the stress tensor calculation
+                raise ValueError("Error, the stress tensor is not loaded in the ensemble. Check the stress tensor calculation.")
+
             # Get the pressure
             Press = np.trace(stress_tensor) / 3
+
+            # Get the error correctly accounting for symmetries
+            stress_diagonal_err = np.diag(stress_err)
+            press_err = 0
+            for i in range(3):
+                if not stress_diagonal_err[i] in stress_diagonal_err[:i]:
+                    press_err += stress_diagonal_err[i]**2
+            press_err = np.sqrt(press_err)
 
             # Get the volume
             Vol = self.minim.dyn.structure.get_volume()
@@ -656,6 +670,11 @@ Error, the specified location to save the ensemble:
  ENTHALPIC CONTRIBUTION
  ======================
 
+ Current pressure P = {:.4f} +- {:.4f} GPa
+ Target pressure  P = {:.4f} GPa
+
+ For enthalpy we use the target pressure.
+
  P = {:.4f} GPa   V = {:.4f} A^3
 
  P V = {:.8e} eV
@@ -664,7 +683,7 @@ Error, the specified location to save the ensemble:
  Gibbs Free energy = {:.10e} eV {}
  Zero energy = {:.10e} eV
 
- """.format(target_press , Vol,target_press_evA3 * Vol, helmoltz, mark_helmoltz, gibbs, mark_gibbs, self.minim.eq_energy)
+ """.format(Press / CC.Units.GPA_TO_EV_PER_A3, press_err/ CC.Units.GPA_TO_EV_PER_A3, target_press, target_press, Vol, target_press_evA3 * Vol, helmoltz, mark_helmoltz, gibbs, mark_gibbs, self.minim.eq_energy)
             print(message)
             # print " ====================== "
             # print " ENTHALPIC CONTRIBUTION "
@@ -727,7 +746,8 @@ Error, the specified location to save the ensemble:
                 self.minim.dyn.dynmats[iq] = fcq[iq, :, :]
 
             # Save the dynamical matrix
-            self.minim.dyn.save_qe("dyn_pop%d_" % pop)
+            if self.save_ensemble or self.save_dyn:
+                self.minim.dyn.save_qe("dyn_pop%d_" % pop)
 
             # Check if the constant volume calculation is converged
             running1 = not self.minim.is_converged()
