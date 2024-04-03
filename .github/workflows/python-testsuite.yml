@@ -13,11 +13,11 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-  
+
     strategy:
       matrix:
         python-version: [3.8]
-    
+
     services:
       rabbitmq:
           image: rabbitmq:latest
@@ -39,6 +39,7 @@ jobs:
         pip install git+https://github.com/mir-group/flare.git@development
         if [ ${{matrix.python-version}} -eq 2.7 ]; then pip install -r requirements2.txt;
         else pip install -r requirements.txt; fi
+        aiida-pseudo install
 
     - name: Lint with flake8
       run: |
@@ -55,7 +56,7 @@ jobs:
         cd CellConstructor
         python setup.py install --user
         cd ..
-        
+
         python setup.py install --user
 
         # Install julia requirements
