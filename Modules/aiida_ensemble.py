@@ -35,11 +35,12 @@ class AiiDAEnsemble(Ensemble):
     def compute_ensemble( # pylint: disable=arguments-renamed
         self,
         pw_code: str,
-        protocol: str = 'moderate',
-        options: dict = None,
-        overrides: dict = None,
-        group_label: str = None,
-        waiting_time: int = 2.5,
+        protocol: str['fast', 'moderate', 'precise'] = 'moderate',
+        options: dict | None  = None,
+        overrides: dict | None = None,
+        group_label: str | None = None,
+        waiting_time: int | float = 2.5,
+        batch_number: int = 1,
         **kwargs
     ) -> None:
         """Compute ensemble properties.
@@ -52,6 +53,10 @@ class AiiDAEnsemble(Ensemble):
             overrides: The overrides for the :func:`aiida_quantumespresso.workflows.pw.base.PwBaseWorkChain.get_builder_from_protocol`
             group_label: The group label where to add the submitted nodes for eventual future inspection
             waiting_time: Time delay in seconds for WorkChain submission; usefull for many configurations
+            batch_number: Number of batches used to split the submission of all the structures, one after the other.
+                For example: 2 would submit two batches, computing the first one, then the second.
+                This is particularly useful when performing on-the-fly simulations, so that the ML potential
+                can be trained on previous batches and (hopefully) predict on the following batches.
             kwargs: The kwargs for the get_builder_from_protocol
 
         """
@@ -77,80 +82,87 @@ class AiiDAEnsemble(Ensemble):
                 pass
 
         structures = copy(self.structures)
-        dft_indices = np.arange(0, len(structures), 1).tolist()  # store here the indices to run with DFT/AiiDA
-
-        # ============= FLARE SECTION ============= #
-        # If a model is specified and it's not empty, try to predict.
-        # Predict only the ones that are within uncertainty, the rest do via DFT/AiiDA.
-        if self.gp_model is not None:
-            number_of_atoms = structures[0].get_ase_atoms().get_global_number_of_atoms()
+        dft_indices_batches = split_array(list(range(len(structures))), batch_number)  # store here the indices to run with DFT/AiiDA
+        
+        if batch_number > 1:
+            print(f"Submission in batches is active. Number of batches that will be submitted: {batch_number}")
+        
+        for batch_n, dft_indices in enumerate(dft_indices_batches):
+            if batch_number > 1:
+                print(f"Batch submitted: {batch_n}/{batch_number}")
             
-            if self.max_atoms_added < 0:
-                self.max_atoms_added = number_of_atoms
+            # ================ FLARE SECTION ================= #
+            # If a model is specified and it's not empty, try to predict.
+            # Predict only the ones that are within uncertainty, the rest do via DFT/AiiDA.
+            if self.gp_model is not None:
+                number_of_atoms = structures[0].get_ase_atoms().get_global_number_of_atoms()
+                
+                if self.max_atoms_added < 0:
+                    self.max_atoms_added = number_of_atoms
 
-            if self.init_atoms is None:
-                self.init_atoms = list(range(number_of_atoms))
-            
-            if len(self.gp_model.training_data) > 0:
-                self._predict_with_model(structures, dft_indices)
+                if self.init_atoms is None:
+                    self.init_atoms = list(range(number_of_atoms))
+                
+                if len(self.gp_model.training_data) > 0:
+                    self._predict_with_model(structures, dft_indices)
 
-        # ============= AIIDA SECTION START ============= #
-        workchains = submit_and_get_workchains(
-            structures=[structures[i] for i in dft_indices],
-            pw_code=pw_code,
-            temperature=self.current_T,
-            dft_indices=dft_indices,
-            protocol=protocol,
-            options=options,
-            overrides=overrides,
-            waiting_time=waiting_time,
-            **kwargs
-        )
+            # ================= AIIDA SECTION  ================ #
+            workchains = submit_and_get_workchains(
+                structures=[structures[i] for i in dft_indices],
+                pw_code=pw_code,
+                temperature=self.current_T,
+                dft_indices=dft_indices,
+                protocol=protocol,
+                options=options,
+                overrides=overrides,
+                waiting_time=waiting_time,
+                **kwargs
+            )
 
-        if group:
-            group.add_nodes(workchains)
+            if group:
+                group.add_nodes(workchains)
 
-        workchains_copy = copy(workchains)
-        while workchains_copy:
-            workchains_copy = get_running_workchains(workchains_copy, self.force_computed)
-            if workchains_copy:
-                time.sleep(60)  # wait before checking again
+            workchains_copy = copy(workchains)
+            while workchains_copy:
+                workchains_copy = get_running_workchains(workchains_copy, self.force_computed)
+                if workchains_copy:
+                    time.sleep(60)  # wait before checking again
 
-        for i, is_computed in enumerate(self.force_computed):
-            if is_computed and i in dft_indices:
-                dft_stress = None
-                wc = workchains[dft_indices.index(i)]
+            for i, is_computed in enumerate(self.force_computed):
+                if is_computed and i in dft_indices:
+                    dft_stress = None
+                    wc = workchains[dft_indices.index(i)]
 
-                dft_energy = wc.outputs.output_parameters.dict.energy
-                dft_forces = wc.outputs.output_trajectory.get_array('forces')[-1]
+                    dft_energy = wc.outputs.output_parameters.dict.energy
+                    dft_forces = wc.outputs.output_trajectory.get_array('forces')[-1]
 
-                self.energies[i] = dft_energy / CONSTANTS.ry_to_ev
-                self.forces[i] = dft_forces / CONSTANTS.ry_to_ev
+                    self.energies[i] = dft_energy / CONSTANTS.ry_to_ev
+                    self.forces[i] = dft_forces / CONSTANTS.ry_to_ev
 
-                if self.has_stress:
-                    stress = wc.outputs.output_trajectory.get_array('stress')[-1]
+                    if self.has_stress:
+                        stress = wc.outputs.output_trajectory.get_array('stress')[-1]
 
-                    self.stresses[i] = stress * gpa_to_rybohr3
+                        self.stresses[i] = stress * gpa_to_rybohr3
 
-                    dft_stress = ase_stress_units * np.array([
-                        stress[0, 0], stress[1, 1], stress[2, 2], 
-                        stress[1, 2], stress[0, 2], stress[0, 1],
-                    ])
+                        dft_stress = ase_stress_units * np.array([
+                            stress[0, 0], stress[1, 1], stress[2, 2], 
+                            stress[1, 2], stress[0, 2], stress[0, 1],
+                        ])
 
-                if self.gp_model is not None:
-                    self._update_gp(
-                        FLARE_Atoms.from_ase_atoms(wc.inputs.pw.structure.get_ase()),
-                        dft_frcs=dft_forces,
-                        dft_energy=dft_energy,
-                        dft_stress=dft_stress,
-                    )
-        # ============= AIIDA SECTION END ============= #
+                    if self.gp_model is not None:
+                        self._update_gp(
+                            FLARE_Atoms.from_ase_atoms(wc.inputs.pw.structure.get_ase()),
+                            dft_frcs=dft_forces,
+                            dft_energy=dft_energy,
+                            dft_stress=dft_stress,
+                        )
 
-        if self.gp_model is not None:
-            self._train_gp()
-            self._write_model()
+            # ================ TRAIN SECTION ================ #
+            if self.gp_model is not None:
+                self._train_gp()
+                self._write_model()
 
-        # ============= FINALIZE ============= #
+        # ================ FINALIZE ================ #
         if self.has_stress:
             self.stress_computed = copy(self.force_computed)
 
@@ -168,10 +180,13 @@ class AiiDAEnsemble(Ensemble):
         Args:
         ----
             structures: list of :class:`~cellconstructor.Structure.Structure` to simulate
+            sub_indices: list of integers related to the structures batch
             dft_indices: list of integers related to the structures
 
         """
-        for index, structure in enumerate(structures):
+        sub_indices = copy(dft_indices)
+        for index in sub_indices:
+            structure = structures[index]
             atoms = FLARE_Atoms.from_ase_atoms(structure.get_ase_atoms())
             self._compute_properties(atoms)
 
@@ -195,9 +210,9 @@ class AiiDAEnsemble(Ensemble):
             self.output.write_wall_time(tic, task='Env Selection')
 
             if not std_in_bound:
-                print(f"[DFT CALLED] For structure index {index}")
+                print(f"[DFT CALLED] For structure with id={index}")
             else:
-                print(f"[BFFS  USED] For structure index {index}")
+                print(f"[BFFS  USED] For structure with id={index}")
                 dft_indices.remove(index)  # remove index computed via ML-FF
     
                 self.energies[index] = atoms.potential_energy / units.Ry
@@ -400,7 +415,7 @@ def submit_and_get_workchains(
     protocol: str = 'moderate',
     options: dict = None,
     overrides: dict = None,
-    waiting_time: int = 2.5,
+    waiting_time: int | float = 2.5,
     **kwargs
 ) -> list[WorkChainNode]:
     """Submit and return the workchains for a list of :class:`~cellconstructor.Structure.Structure`.
@@ -433,7 +448,32 @@ def submit_and_get_workchains(
         )
         builder.metadata.label = f'T_{temperature}_id_{i}'
         workchains.append(submit(builder))
-        print(f'Launched <PwBaseWorkChain> with PK={workchains[-1].pk}')
+        print(f'Launched <PwBaseWorkChain> with id={i} PK={workchains[-1].pk}')
         time.sleep(waiting_time)
 
     return workchains
+
+def split_array(array: list, n: int) -> list[list]:
+    """Split a generic array into N subarrays.
+    
+    .. note:: if `n` is larger then len(array)
+
+    Args:
+    ----
+        array: a flat array to split into (semi)equal pieces.
+        n: number of pieces
+
+    """
+    array = np.array(array)
+    # Ensure N does not exceed the number of elements in the array
+    n = min(n, len(array))
+    
+    # Calculate the size of each chunk
+    chunk_sizes = np.full(n, len(array) // n)
+    chunk_sizes[:len(array) % n] += 1
+
+    # Generate the indices at which to split the array
+    indices = np.cumsum(chunk_sizes)
+
+    # Split the array at the calculated indices
+    return np.split(array, indices[:-1])
