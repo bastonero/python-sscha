@@ -4215,6 +4215,7 @@ Error while loading the julia module.
             timer.execute_timed_function(self.init)
         else:
             self.init()
+
     def w_to_a(self,w, T):
         n = len(w)
         a = np.zeros(n)

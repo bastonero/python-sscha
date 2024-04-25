@@ -8,21 +8,21 @@ from ase.calculators.lj import LennardJones
 from ase.build import make_supercell
 
 # Define kernel.
-sigma = 2.0
-power = 1.0
-dotprod_kernel = DotProduct(sigma, power)
-normdotprod_kernel = NormalizedDotProduct(sigma, power)
+sigma_ = 2.0
+power_ = 2.0
+dotprod_kernel_ = DotProduct(sigma_, power_)
+normdotprod_kernel_ = NormalizedDotProduct(sigma_, power_)
 
 # Define remaining parameters for the SGP wrapper.
-sigma_e = 0.005
-sigma_f = 0.01
-sigma_s = 0.001
-species_map = {6: 0, 8: 1}
-single_atom_energies = {0: 0, 1: 0}
-variance_type = "local"
-max_iterations = 40
-opt_method = "L-BFGS-B"
-bounds = [(None, None), (sigma_e, None), (None, None), (None, None)]
+sigma_e_ = 0.01
+sigma_f_ = 0.1
+sigma_s_ = 0.005
+species_map_ = {6: 0, 8: 1}
+single_atom_energies_ = {0: 0, 1: 0}
+variance_type_ = "local"
+max_iterations_ = 100
+opt_method_ = "L-BFGS-B"
+bounds_ = [(None, None), (sigma_e_, None), (None, None), (None, None)]
 
 
 def get_atoms(a=2.0, sc_size=2, numbers=[6, 8]) -> Atoms:
@@ -69,9 +69,9 @@ def get_empty_sgp(
     the_atom_energies=None, kernel_type="NormalizedDotProduct") -> SGP_Wrapper:
     """Return an empty SGP model."""
     if kernel_type == "NormalizedDotProduct":
-        kernel = normdotprod_kernel
+        kernel = normdotprod_kernel_
     elif kernel_type == "DotProduct":
-        kernel = dotprod_kernel
+        kernel = dotprod_kernel_
 
     kernel.power = power
 
@@ -95,22 +95,22 @@ def get_empty_sgp(
         cutoff_matrix,
     )
     
-    species_map = species_map if the_map is None else the_map
-    single_atom_energies = single_atom_energies if the_map is None else the_atom_energies
+    species_map = species_map_ if the_map is None else the_map
+    single_atom_energies = single_atom_energies_ if the_map is None else the_atom_energies
 
     empty_sgp = SGP_Wrapper(
         [kernel],
         [b2_calc],
         cutoff,
-        sigma_e,
-        sigma_f,
-        sigma_s,
+        sigma_e_,
+        sigma_f_,
+        sigma_s_,
         species_map,
         single_atom_energies=single_atom_energies,
-        variance_type=variance_type,
-        opt_method=opt_method,
-        bounds=bounds,
-        max_iterations=max_iterations,
+        variance_type=variance_type_,
+        opt_method=opt_method_,
+        bounds=bounds_,
+        max_iterations=max_iterations_,
     )
 
     return empty_sgp

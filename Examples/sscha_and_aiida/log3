@@ -1,0 +1,1273 @@
+Number of symmetry inequivalent displacements: 1
+Force computed shape: 50
+Computing configuration 1 out of 50 (nat = 16)
+Computing configuration 2 out of 50 (nat = 16)
+Computing configuration 3 out of 50 (nat = 16)
+Computing configuration 4 out of 50 (nat = 16)
+Computing configuration 5 out of 50 (nat = 16)
+Computing configuration 6 out of 50 (nat = 16)
+Computing configuration 7 out of 50 (nat = 16)
+Computing configuration 8 out of 50 (nat = 16)
+Computing configuration 9 out of 50 (nat = 16)
+Computing configuration 10 out of 50 (nat = 16)
+Computing configuration 11 out of 50 (nat = 16)
+Computing configuration 12 out of 50 (nat = 16)
+Computing configuration 13 out of 50 (nat = 16)
+Computing configuration 14 out of 50 (nat = 16)
+Computing configuration 15 out of 50 (nat = 16)
+Computing configuration 16 out of 50 (nat = 16)
+Computing configuration 17 out of 50 (nat = 16)
+Computing configuration 18 out of 50 (nat = 16)
+Computing configuration 19 out of 50 (nat = 16)
+Computing configuration 20 out of 50 (nat = 16)
+Computing configuration 21 out of 50 (nat = 16)
+Computing configuration 22 out of 50 (nat = 16)
+Computing configuration 23 out of 50 (nat = 16)
+Computing configuration 24 out of 50 (nat = 16)
+Computing configuration 25 out of 50 (nat = 16)
+Computing configuration 26 out of 50 (nat = 16)
+Computing configuration 27 out of 50 (nat = 16)
+Computing configuration 28 out of 50 (nat = 16)
+Computing configuration 29 out of 50 (nat = 16)
+Computing configuration 30 out of 50 (nat = 16)
+Computing configuration 31 out of 50 (nat = 16)
+Computing configuration 32 out of 50 (nat = 16)
+Computing configuration 33 out of 50 (nat = 16)
+Computing configuration 34 out of 50 (nat = 16)
+Computing configuration 35 out of 50 (nat = 16)
+Computing configuration 36 out of 50 (nat = 16)
+Computing configuration 37 out of 50 (nat = 16)
+Computing configuration 38 out of 50 (nat = 16)
+Computing configuration 39 out of 50 (nat = 16)
+Computing configuration 40 out of 50 (nat = 16)
+Computing configuration 41 out of 50 (nat = 16)
+Computing configuration 42 out of 50 (nat = 16)
+Computing configuration 43 out of 50 (nat = 16)
+Computing configuration 44 out of 50 (nat = 16)
+Computing configuration 45 out of 50 (nat = 16)
+Computing configuration 46 out of 50 (nat = 16)
+Computing configuration 47 out of 50 (nat = 16)
+Computing configuration 48 out of 50 (nat = 16)
+Computing configuration 49 out of 50 (nat = 16)
+Computing configuration 50 out of 50 (nat = 16)
+Force computed shape: 50
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  1
+Minimization step, force computed: 50
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     118.20417178 meV
+Anharmonic contribution to free energy = -308491.83663769 +-       0.18821541 meV
+Free energy = -308373.63246591 +-       0.18821541 meV
+FC gradient modulus =     182.75557442 +-      90.14152625 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.43309923 meV/A
+Kong-Liu effective sample size =  49.99931246175452
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  2
+Minimization step, force computed: 50
+Good step found with 0.15000000000000002, try increment
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     118.20417178 meV
+Anharmonic contribution to free energy = -308491.83663769 +-       0.18821541 meV
+Free energy = -308373.63246591 +-       0.18821541 meV
+FC gradient modulus =     152.95855939 +-      90.10531616 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.43327265 meV/A
+Kong-Liu effective sample size =  49.99931246175452
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+ROOT  NAME: ./thermal_expansion/minim_t0
+SAVE  NAME: ./thermal_expansion/minim_t0
+FNAME NAME: None
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  3
+Minimization step, force computed: 50
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     118.15072753 meV
+Anharmonic contribution to free energy = -308491.78549128 +-       0.18790604 meV
+Free energy = -308373.63476375 +-       0.18790604 meV
+FC gradient modulus =     152.95855939 +-      90.10531616 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.43327265 meV/A
+Kong-Liu effective sample size =  49.996444413429145
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  4
+Minimization step, force computed: 50
+Good step found with 0.22500000000000003, try increment
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     118.15072753 meV
+Anharmonic contribution to free energy = -308491.78549128 +-       0.18790604 meV
+Free energy = -308373.63476375 +-       0.18790604 meV
+FC gradient modulus =     115.77849587 +-      90.06940684 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.43351103 meV/A
+Kong-Liu effective sample size =  49.996444413429145
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+ROOT  NAME: ./thermal_expansion/minim_t0
+SAVE  NAME: ./thermal_expansion/minim_t0
+FNAME NAME: None
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  5
+Minimization step, force computed: 50
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     118.08761323 meV
+Anharmonic contribution to free energy = -308491.72512389 +-       0.18759715 meV
+Free energy = -308373.63751066 +-       0.18759715 meV
+FC gradient modulus =     115.77849587 +-      90.06940684 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.43351103 meV/A
+Kong-Liu effective sample size =  49.99031730556114
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  6
+Minimization step, force computed: 50
+Good step found with 0.3375, try increment
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     118.08761323 meV
+Anharmonic contribution to free energy = -308491.72512389 +-       0.18759715 meV
+Free energy = -308373.63751066 +-       0.18759715 meV
+FC gradient modulus =      74.01158891 +-      90.04266371 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.43382080 meV/A
+Kong-Liu effective sample size =  49.99031730556114
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+ROOT  NAME: ./thermal_expansion/minim_t0
+SAVE  NAME: ./thermal_expansion/minim_t0
+FNAME NAME: None
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  7
+Minimization step, force computed: 50
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     118.02315360 meV
+Anharmonic contribution to free energy = -308491.66360756 +-       0.18733845 meV
+Free energy = -308373.64045397 +-       0.18733845 meV
+FC gradient modulus =      74.01158891 +-      90.04266371 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.43382080 meV/A
+Kong-Liu effective sample size =  49.98128027174389
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  8
+Minimization step, force computed: 50
+Good step found with 0.5062500000000001, try increment
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     118.02315360 meV
+Anharmonic contribution to free energy = -308491.66360756 +-       0.18733845 meV
+Free energy = -308373.64045397 +-       0.18733845 meV
+FC gradient modulus =      34.77896702 +-      90.03402519 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.43418490 meV/A
+Kong-Liu effective sample size =  49.98128027174389
+
+
+The gc gradient satisfy the convergence condition.
+
+The gw gradient satisfy the convergence condition.
+The system satisfy the convergence criteria according to the input.
+Check the stopping criteria: Running =  False
+ROOT  NAME: ./thermal_expansion/minim_t0
+SAVE  NAME: ./thermal_expansion/minim_t0
+FNAME NAME: None
+
+ * * * * * * * * 
+ *             * 
+ *   RESULTS   * 
+ *             * 
+ * * * * * * * * 
+
+
+Minimization ended after 8 steps
+
+Free energy = -308373.64045397 +-       0.18733845 meV
+FC gradient modulus =      34.77896702 +-      90.03402519 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.43418490 meV/A
+Kong-Liu effective sample size =  49.98128027174389
+
+Total force on the centroids [eV/A]:
+   0)       0.000000     -0.000000      0.000000  +-       0.000000      0.000000     -0.000000
+   1)       0.000000      0.000000     -0.000000  +-       0.000000      0.000000      0.000000
+
+
+ ==== STRESS TENSOR [GPa] ==== 
+      0.81636588      0.00000000     -0.00000000                0.01024800      0.00000000      0.00000000
+      0.00000000      0.81636588     -0.00000000    +-          0.00000000      0.01024800      0.00000000
+     -0.00000000     -0.00000000      0.81636588                0.00000000      0.00000000      0.01024800
+
+ Ab initio average stress [GPa]:
+      0.66256699      0.00000000     -0.00000000
+      0.00000000      0.66256699      0.00000000
+     -0.00000000      0.00000000      0.66256699
+
+
+
+========================
+      TIMER REPORT      
+========================
+
+Threshold for printing: 5 %
+
+Function: get_fourier_gradient
+N = 1 calls took: 0 hours; 0 minutes; 0.84 seconds
+Average of 0.8426022529602051 s per call
+Subroutine report:
+    Function: GoParallel
+    N = 1 calls took: 0 hours; 0 minutes; 0.84 seconds
+    Average of 0.8413608074188232 s per call
+    Subroutine report:
+        Function: compute
+        N = 1 calls took: 0 hours; 0 minutes; 0.84 seconds
+        Average of 0.8412981033325195 s per call
+        Subroutine report:
+
+
+    Function: fourier gradient julia
+    N = 1 calls took: 0 hours; 0 minutes; 0.84 seconds
+    Average of 0.8415110111236572 s per call
+
+
+Function: minimization_step
+N = 8 calls took: 0 hours; 0 minutes; 0.28 seconds
+Average of 0.035197049379348755 s per call
+Subroutine report:
+    Function: get_fourier_gradient
+    N = 8 calls took: 0 hours; 0 minutes; 0.01 seconds
+    Average of 0.0017607808113098145 s per call
+    Subroutine report:
+        Function: GoParallel
+        N = 8 calls took: 0 hours; 0 minutes; 0.00 seconds
+        Average of 0.0006138086318969727 s per call
+        Subroutine report:
+            Function: compute
+            N = 8 calls took: 0 hours; 0 minutes; 0.00 seconds
+            Average of 0.0005699694156646729 s per call
+            Subroutine report:
+
+
+        Function: fourier gradient upsilon q
+        N = 8 calls took: 0 hours; 0 minutes; 0.00 seconds
+        Average of 0.0005290806293487549 s per call
+
+        Function: fourier gradient Y * u
+        N = 8 calls took: 0 hours; 0 minutes; 0.00 seconds
+        Average of 0.0004737973213195801 s per call
+
+        Function: fourier gradient julia
+        N = 8 calls took: 0 hours; 0 minutes; 0.01 seconds
+        Average of 0.0007123053073883057 s per call
+
+
+    Function: SymmetrizeFCQ
+    N = 8 calls took: 0 hours; 0 minutes; 0.08 seconds
+    Average of 0.009617865085601807 s per call
+
+    Function: Symmetrize
+    N = 8 calls took: 0 hours; 0 minutes; 0.08 seconds
+    Average of 0.009717166423797607 s per call
+
+    Function: update
+    N = 8 calls took: 0 hours; 0 minutes; 0.10 seconds
+    Average of 0.0125904381275177 s per call
+    Subroutine report:
+        Function: update_weights_fourier
+        N = 8 calls took: 0 hours; 0 minutes; 0.10 seconds
+        Average of 0.012545883655548096 s per call
+        Subroutine report:
+            Function: DiagonalizeSupercell
+            N = 8 calls took: 0 hours; 0 minutes; 0.07 seconds
+            Average of 0.008427917957305908 s per call
+            Subroutine report:
+                Function: DyagDinQ
+                N = 64 calls took: 0 hours; 0 minutes; 0.01 seconds
+                Average of 0.0002085752785205841 s per call
+
+                Function: Manipulate polarization vectors
+                N = 64 calls took: 0 hours; 0 minutes; 0.01 seconds
+                Average of 0.00017771124839782715 s per call
+
+
+            Function: Time to get SSCHA energy and forces
+            N = 8 calls took: 0 hours; 0 minutes; 0.01 seconds
+            Average of 0.0011301040649414062 s per call
+
+            Function: get upsilon fourier
+            N = 8 calls took: 0 hours; 0 minutes; 0.01 seconds
+            Average of 0.0008168518543243408 s per call
+
+            Function: get uYu
+            N = 8 calls took: 0 hours; 0 minutes; 0.01 seconds
+            Average of 0.001642853021621704 s per call
+
+
+
+
+
+ END OF TIMER REPORT 
+=====================
+
+
+ ======================
+ ENTHALPIC CONTRIBUTION
+ ======================
+
+ Current pressure P = 0.8164 +- 0.0102 GPa
+ Target pressure  P = 0.0000 GPa
+
+ For enthalpy we use the target pressure.
+
+ P = 0.0000 GPa   V = 40.0470 A^3
+
+ P V = 0.00000000e+00 eV
+
+ Helmoltz Free energy = -3.0837364045e+02 eV 
+ Gibbs Free energy = -3.0837364045e+02 eV <--
+ Zero energy = 0.0000000000e+00 eV
+
+ 
+[CELL] VOLUME: 40.04698463143717
+[CELL] unit_cell:
+Cell([[2.71548, 2.71548, 0.0], [2.71548, 0.0, 2.71548], [0.0, 2.71548, 2.71548]])
+[CELL] CURRENT STRAIN:
+[[ 0.00000000e+00  4.39618027e-18 -4.39618027e-18]
+ [ 4.39618027e-18  0.00000000e+00 -4.39618027e-18]
+ [ 4.39618027e-18 -4.39618027e-18  0.00000000e+00]]
+[CELL] NEW STRESS:
+[[ 5.09535512e-03  1.86650424e-18 -2.48867232e-18]
+ [ 1.24433616e-18  5.09535512e-03 -1.86650424e-18]
+ [-9.33252119e-19 -1.86650424e-18  5.09535512e-03]]
+GRAD MAT:
+[[-2.04053608e-01 -7.56449230e-17  1.00560878e-16]
+ [-5.07289675e-17 -2.04053608e-01  7.56449230e-17]
+ [ 3.64768768e-17  7.56449230e-17 -2.04053608e-01]]
+
+[CELL] New step:
+[CELL]    X_OLD = [ 0.00000000e+00  4.39618027e-18 -4.39618027e-18  4.39618027e-18
+  0.00000000e+00 -4.39618027e-18  4.39618027e-18 -4.39618027e-18
+  0.00000000e+00]   | ALPHA = 0.013335807390121452
+[CELL]    DIRECTION = [-2.04053608e-01 -7.56449230e-17  1.00560878e-16 -5.07289675e-17
+ -2.04053608e-01  7.56449230e-17  3.64768768e-17  7.56449230e-17
+ -2.04053608e-01]
+[CELL]    GRADIENT = [-2.04053608e-01 -7.56449230e-17  1.00560878e-16 -5.07289675e-17
+ -2.04053608e-01  7.56449230e-17  3.64768768e-17  7.56449230e-17
+ -2.04053608e-01]
+[CELL]    X_NEW = [ 2.72121961e-03  5.40496639e-18 -5.73724078e-18  5.07269201e-18
+  2.72121961e-03 -5.40496639e-18  3.90973167e-18 -5.40496639e-18
+  2.72121961e-03]
+[CELL]  Step number = 1
+
+NEW STRAIN:
+[[ 2.72121961e-03  5.40496639e-18 -5.73724078e-18]
+ [ 5.07269201e-18  2.72121961e-03 -5.40496639e-18]
+ [ 3.90973167e-18 -5.40496639e-18  2.72121961e-03]]
+NEW VOLUME: -40.374805006719775
+
+ Currently estimated bulk modulus =  100.000 GPa
+ (Note: this is just indicative, do not use it for computing bulk modulus)
+
+ 
+ New unit cell:
+ v1 [A] = (      2.72286942       2.72286942      -0.00000000)
+ v2 [A] = (      2.72286942      -0.00000000       2.72286942)
+ v3 [A] = (     -0.00000000       2.72286942       2.72286942)
+
+Check the symmetries in the new cell:
+Symmetries of the bravais lattice: 48
+Symmetries of the crystal: 24
+Symmetries of the small group of q: 24
+Forcing the symmetries in the dynamical matrix.
+Force computed shape: 50
+Computing configuration 1 out of 50 (nat = 16)
+Computing configuration 2 out of 50 (nat = 16)
+Computing configuration 3 out of 50 (nat = 16)
+Computing configuration 4 out of 50 (nat = 16)
+Computing configuration 5 out of 50 (nat = 16)
+Computing configuration 6 out of 50 (nat = 16)
+Computing configuration 7 out of 50 (nat = 16)
+Computing configuration 8 out of 50 (nat = 16)
+Computing configuration 9 out of 50 (nat = 16)
+Computing configuration 10 out of 50 (nat = 16)
+Computing configuration 11 out of 50 (nat = 16)
+Computing configuration 12 out of 50 (nat = 16)
+Computing configuration 13 out of 50 (nat = 16)
+Computing configuration 14 out of 50 (nat = 16)
+Computing configuration 15 out of 50 (nat = 16)
+Computing configuration 16 out of 50 (nat = 16)
+Computing configuration 17 out of 50 (nat = 16)
+Computing configuration 18 out of 50 (nat = 16)
+Computing configuration 19 out of 50 (nat = 16)
+Computing configuration 20 out of 50 (nat = 16)
+Computing configuration 21 out of 50 (nat = 16)
+Computing configuration 22 out of 50 (nat = 16)
+Computing configuration 23 out of 50 (nat = 16)
+Computing configuration 24 out of 50 (nat = 16)
+Computing configuration 25 out of 50 (nat = 16)
+Computing configuration 26 out of 50 (nat = 16)
+Computing configuration 27 out of 50 (nat = 16)
+Computing configuration 28 out of 50 (nat = 16)
+Computing configuration 29 out of 50 (nat = 16)
+Computing configuration 30 out of 50 (nat = 16)
+Computing configuration 31 out of 50 (nat = 16)
+Computing configuration 32 out of 50 (nat = 16)
+Computing configuration 33 out of 50 (nat = 16)
+Computing configuration 34 out of 50 (nat = 16)
+Computing configuration 35 out of 50 (nat = 16)
+Computing configuration 36 out of 50 (nat = 16)
+Computing configuration 37 out of 50 (nat = 16)
+Computing configuration 38 out of 50 (nat = 16)
+Computing configuration 39 out of 50 (nat = 16)
+Computing configuration 40 out of 50 (nat = 16)
+Computing configuration 41 out of 50 (nat = 16)
+Computing configuration 42 out of 50 (nat = 16)
+Computing configuration 43 out of 50 (nat = 16)
+Computing configuration 44 out of 50 (nat = 16)
+Computing configuration 45 out of 50 (nat = 16)
+Computing configuration 46 out of 50 (nat = 16)
+Computing configuration 47 out of 50 (nat = 16)
+Computing configuration 48 out of 50 (nat = 16)
+Computing configuration 49 out of 50 (nat = 16)
+Computing configuration 50 out of 50 (nat = 16)
+Force computed shape: 50
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  9
+Minimization step, force computed: 50
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     117.95071445 meV
+Anharmonic contribution to free energy = -308492.27277791 +-       0.12630427 meV
+Free energy = -308374.32206346 +-       0.12630427 meV
+FC gradient modulus =     571.33305580 +-      87.20487894 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.37164914 meV/A
+Kong-Liu effective sample size =  49.98834525233436
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  10
+Minimization step, force computed: 50
+Good step found with 0.15000000000000002, try increment
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     117.95071445 meV
+Anharmonic contribution to free energy = -308492.27277791 +-       0.12630427 meV
+Free energy = -308374.32206346 +-       0.12630427 meV
+FC gradient modulus =     483.77196318 +-      87.04634377 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.37099603 meV/A
+Kong-Liu effective sample size =  49.98834525233436
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+ROOT  NAME: ./thermal_expansion/minim_t0
+SAVE  NAME: ./thermal_expansion/minim_t0
+FNAME NAME: None
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  11
+Minimization step, force computed: 50
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     117.85765758 meV
+Anharmonic contribution to free energy = -308492.18364013 +-       0.12392259 meV
+Free energy = -308374.32598255 +-       0.12392259 meV
+FC gradient modulus =     483.77196318 +-      87.04634377 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.37099603 meV/A
+Kong-Liu effective sample size =  49.9409735529959
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  12
+Minimization step, force computed: 50
+Good step found with 0.22500000000000003, try increment
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     117.85765758 meV
+Anharmonic contribution to free energy = -308492.18364013 +-       0.12392259 meV
+Free energy = -308374.32598255 +-       0.12392259 meV
+FC gradient modulus =     372.90564876 +-      86.90757818 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.37035883 meV/A
+Kong-Liu effective sample size =  49.9409735529959
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+ROOT  NAME: ./thermal_expansion/minim_t0
+SAVE  NAME: ./thermal_expansion/minim_t0
+FNAME NAME: None
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  13
+Minimization step, force computed: 50
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     117.74854581 meV
+Anharmonic contribution to free energy = -308492.07814773 +-       0.12199468 meV
+Free energy = -308374.32960193 +-       0.12199468 meV
+FC gradient modulus =     372.90564876 +-      86.90757818 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.37035883 meV/A
+Kong-Liu effective sample size =  49.84283113117479
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  14
+Minimization step, force computed: 50
+Good step found with 0.3375, try increment
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     117.74854581 meV
+Anharmonic contribution to free energy = -308492.07814773 +-       0.12199468 meV
+Free energy = -308374.32960193 +-       0.12199468 meV
+FC gradient modulus =     245.66216705 +-      86.83577615 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.36990406 meV/A
+Kong-Liu effective sample size =  49.84283113117479
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+ROOT  NAME: ./thermal_expansion/minim_t0
+SAVE  NAME: ./thermal_expansion/minim_t0
+FNAME NAME: None
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  15
+Minimization step, force computed: 50
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     117.63910565 meV
+Anharmonic contribution to free energy = -308491.97199157 +-       0.12094287 meV
+Free energy = -308374.33288592 +-       0.12094287 meV
+FC gradient modulus =     245.66216705 +-      86.83577615 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.36990406 meV/A
+Kong-Liu effective sample size =  49.70170289869779
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  16
+Minimization step, force computed: 50
+Good step found with 0.5062500000000001, try increment
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     117.63910565 meV
+Anharmonic contribution to free energy = -308491.97199157 +-       0.12094287 meV
+Free energy = -308374.33288592 +-       0.12094287 meV
+FC gradient modulus =     122.19204085 +-      86.86061801 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.36977497 meV/A
+Kong-Liu effective sample size =  49.70170289869779
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+ROOT  NAME: ./thermal_expansion/minim_t0
+SAVE  NAME: ./thermal_expansion/minim_t0
+FNAME NAME: None
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  17
+Minimization step, force computed: 50
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     117.55684460 meV
+Anharmonic contribution to free energy = -308491.89335796 +-       0.12068592 meV
+Free energy = -308374.33651336 +-       0.12068592 meV
+FC gradient modulus =     122.19204085 +-      86.86061801 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.36977497 meV/A
+Kong-Liu effective sample size =  49.56774596722804
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  18
+Minimization step, force computed: 50
+Good step found with 0.7593750000000001, try increment
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     117.55684460 meV
+Anharmonic contribution to free energy = -308491.89335796 +-       0.12068592 meV
+Free energy = -308374.33651336 +-       0.12068592 meV
+FC gradient modulus =      34.71806260 +-      86.94538150 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.36991785 meV/A
+Kong-Liu effective sample size =  49.56774596722804
+
+
+The gc gradient satisfy the convergence condition.
+
+The gw gradient satisfy the convergence condition.
+The system satisfy the convergence criteria according to the input.
+Check the stopping criteria: Running =  False
+ROOT  NAME: ./thermal_expansion/minim_t0
+SAVE  NAME: ./thermal_expansion/minim_t0
+FNAME NAME: None
+
+ * * * * * * * * 
+ *             * 
+ *   RESULTS   * 
+ *             * 
+ * * * * * * * * 
+
+
+Minimization ended after 18 steps
+
+Free energy = -308374.33651336 +-       0.12068592 meV
+FC gradient modulus =      34.71806260 +-      86.94538150 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.36991785 meV/A
+Kong-Liu effective sample size =  49.56774596722804
+
+Total force on the centroids [eV/A]:
+   0)       0.000000     -0.000000     -0.000000  +-      -0.000000      0.000000     -0.000000
+   1)      -0.000000      0.000000     -0.000000  +-       0.000000      0.000000      0.000000
+
+
+ ==== STRESS TENSOR [GPa] ==== 
+     -0.07664727      0.00000000      0.00000000                0.01136236      0.00000000      0.00000000
+     -0.00000000     -0.07664727     -0.00000000    +-          0.00000000      0.01136236      0.00000000
+     -0.00000000     -0.00000000     -0.07664727                0.00000000      0.00000000      0.01136236
+
+ Ab initio average stress [GPa]:
+     -0.22722149     -0.00000000     -0.00000000
+     -0.00000000     -0.22722149      0.00000000
+     -0.00000000      0.00000000     -0.22722149
+
+
+
+========================
+      TIMER REPORT      
+========================
+
+Threshold for printing: 5 %
+
+Function: get_fourier_gradient
+N = 2 calls took: 0 hours; 0 minutes; 0.84 seconds
+Average of 0.4221266508102417 s per call
+Subroutine report:
+    Function: GoParallel
+    N = 2 calls took: 0 hours; 0 minutes; 0.84 seconds
+    Average of 0.42097902297973633 s per call
+    Subroutine report:
+        Function: compute
+        N = 2 calls took: 0 hours; 0 minutes; 0.84 seconds
+        Average of 0.42092299461364746 s per call
+        Subroutine report:
+
+
+    Function: fourier gradient julia
+    N = 2 calls took: 0 hours; 0 minutes; 0.84 seconds
+    Average of 0.42110109329223633 s per call
+
+
+Function: minimization_step
+N = 18 calls took: 0 hours; 0 minutes; 0.62 seconds
+Average of 0.034615808063083224 s per call
+Subroutine report:
+    Function: SymmetrizeFCQ
+    N = 18 calls took: 0 hours; 0 minutes; 0.17 seconds
+    Average of 0.009491642316182455 s per call
+
+    Function: Symmetrize
+    N = 18 calls took: 0 hours; 0 minutes; 0.17 seconds
+    Average of 0.009512212541368272 s per call
+
+    Function: update
+    N = 18 calls took: 0 hours; 0 minutes; 0.22 seconds
+    Average of 0.01243762175242106 s per call
+    Subroutine report:
+        Function: update_weights_fourier
+        N = 18 calls took: 0 hours; 0 minutes; 0.22 seconds
+        Average of 0.012397381994459365 s per call
+        Subroutine report:
+            Function: DiagonalizeSupercell
+            N = 18 calls took: 0 hours; 0 minutes; 0.15 seconds
+            Average of 0.00832959016164144 s per call
+            Subroutine report:
+                Function: DyagDinQ
+                N = 144 calls took: 0 hours; 0 minutes; 0.03 seconds
+                Average of 0.00020677347977956137 s per call
+
+                Function: Manipulate polarization vectors
+                N = 144 calls took: 0 hours; 0 minutes; 0.03 seconds
+                Average of 0.00017636352115207247 s per call
+
+
+            Function: Time to get SSCHA energy and forces
+            N = 18 calls took: 0 hours; 0 minutes; 0.02 seconds
+            Average of 0.0010606580310397679 s per call
+
+            Function: get upsilon fourier
+            N = 18 calls took: 0 hours; 0 minutes; 0.01 seconds
+            Average of 0.0008082522286309137 s per call
+
+            Function: get uYu
+            N = 18 calls took: 0 hours; 0 minutes; 0.03 seconds
+            Average of 0.0016922023561265734 s per call
+
+
+
+
+
+ END OF TIMER REPORT 
+=====================
+
+
+ ======================
+ ENTHALPIC CONTRIBUTION
+ ======================
+
+ Current pressure P = -0.0766 +- 0.0114 GPa
+ Target pressure  P = 0.0000 GPa
+
+ For enthalpy we use the target pressure.
+
+ P = 0.0000 GPa   V = 40.3748 A^3
+
+ P V = 0.00000000e+00 eV
+
+ Helmoltz Free energy = -3.0837433651e+02 eV 
+ Gibbs Free energy = -3.0837433651e+02 eV <--
+ Zero energy = 0.0000000000e+00 eV
+
+ 
+[CELL] VOLUME: 40.374805006719775
+[CELL] unit_cell:
+Cell([[2.7228694174377295, 2.7228694174377295, -4.060279995005321e-18], [2.7228694174377295, -9.022844433345156e-19, 2.7228694174377295], [-9.022844433345154e-19, 2.7228694174377295, 2.7228694174377295]])
+[CELL] CURRENT STRAIN:
+[[ 2.72121961e-03 -2.90375764e-17  2.87053020e-17]
+ [-2.88714392e-17  2.72121961e-03  2.88714392e-17]
+ [-2.88714392e-17  2.88714392e-17  2.72121961e-03]]
+[CELL] NEW STRESS:
+[[-4.78394610e-04  0.00000000e+00  3.88855050e-20]
+ [-3.88855050e-20 -4.78394610e-04 -3.88855050e-20]
+ [-1.16656515e-19 -7.77710099e-20 -4.78394610e-04]]
+GRAD MAT:
+[[ 1.93676497e-02 -5.60863374e-19 -1.01982152e-18]
+ [ 1.01661256e-18  1.93676497e-02  2.13192140e-18]
+ [ 4.16514652e-18  3.70618838e-18  1.93676497e-02]]
+
+[CELL] y0 = 0.12491362486531585 | y1 = -0.011856116393323065
+[CELL] grad = [ 1.93676497e-02 -5.60863374e-19 -1.01982152e-18  1.01661256e-18
+  1.93676497e-02  2.13192140e-18  4.16514652e-18  3.70618838e-18
+  1.93676497e-02]
+[CELL] lastgrad = [-2.04053608e-01 -7.56449230e-17  1.00560878e-16 -5.07289675e-17
+ -2.04053608e-01  7.56449230e-17  3.64768768e-17  7.56449230e-17
+ -2.04053608e-01]
+[CELL]  GRADIENT DOT DIRECTION = 0.9133133083077015
+[CELL] New step:
+[CELL]    X_OLD = [ 2.72121961e-03 -2.90375764e-17  2.87053020e-17 -2.88714392e-17
+  2.72121961e-03  2.88714392e-17 -2.88714392e-17  2.88714392e-17
+  2.72121961e-03]   | ALPHA = 0.012179770366426118
+[CELL]    DIRECTION = [ 1.93676497e-02 -5.60863374e-19 -1.01982152e-18  1.01661256e-18
+  1.93676497e-02  2.13192140e-18  4.16514652e-18  3.70618838e-18
+  1.93676497e-02]
+[CELL]    GRADIENT = [ 1.93676497e-02 -5.60863374e-19 -1.01982152e-18  1.01661256e-18
+  1.93676497e-02  2.13192140e-18  4.16514652e-18  3.70618838e-18
+  1.93676497e-02]
+[CELL]    X_NEW = [ 2.48532609e-03 -2.90307452e-17  2.87177232e-17 -2.88838213e-17
+  2.48532609e-03  2.88454728e-17 -2.89221697e-17  2.88262986e-17
+  2.48532609e-03]
+[CELL]  Step number = 2
+
+NEW STRAIN:
+[[ 2.48532609e-03 -2.90307452e-17  2.87177232e-17]
+ [-2.88838213e-17  2.48532609e-03  2.88454728e-17]
+ [-2.89221697e-17  2.88262986e-17  2.48532609e-03]]
+NEW VOLUME: -40.34631678535821
+
+ Currently estimated bulk modulus =   99.188 GPa
+ (Note: this is just indicative, do not use it for computing bulk modulus)
+
+ 
+ New unit cell:
+ v1 [A] = (      2.72222885       2.72222885      -0.00000000)
+ v2 [A] = (      2.72222885      -0.00000000       2.72222885)
+ v3 [A] = (     -0.00000000       2.72222885       2.72222885)
+
+Check the symmetries in the new cell:
+Symmetries of the bravais lattice: 48
+Symmetries of the crystal: 24
+Symmetries of the small group of q: 24
+Forcing the symmetries in the dynamical matrix.
+Force computed shape: 50
+Computing configuration 1 out of 50 (nat = 16)
+Computing configuration 2 out of 50 (nat = 16)
+Computing configuration 3 out of 50 (nat = 16)
+Computing configuration 4 out of 50 (nat = 16)
+Computing configuration 5 out of 50 (nat = 16)
+Computing configuration 6 out of 50 (nat = 16)
+Computing configuration 7 out of 50 (nat = 16)
+Computing configuration 8 out of 50 (nat = 16)
+Computing configuration 9 out of 50 (nat = 16)
+Computing configuration 10 out of 50 (nat = 16)
+Computing configuration 11 out of 50 (nat = 16)
+Computing configuration 12 out of 50 (nat = 16)
+Computing configuration 13 out of 50 (nat = 16)
+Computing configuration 14 out of 50 (nat = 16)
+Computing configuration 15 out of 50 (nat = 16)
+Computing configuration 16 out of 50 (nat = 16)
+Computing configuration 17 out of 50 (nat = 16)
+Computing configuration 18 out of 50 (nat = 16)
+Computing configuration 19 out of 50 (nat = 16)
+Computing configuration 20 out of 50 (nat = 16)
+Computing configuration 21 out of 50 (nat = 16)
+Computing configuration 22 out of 50 (nat = 16)
+Computing configuration 23 out of 50 (nat = 16)
+Computing configuration 24 out of 50 (nat = 16)
+Computing configuration 25 out of 50 (nat = 16)
+Computing configuration 26 out of 50 (nat = 16)
+Computing configuration 27 out of 50 (nat = 16)
+Computing configuration 28 out of 50 (nat = 16)
+Computing configuration 29 out of 50 (nat = 16)
+Computing configuration 30 out of 50 (nat = 16)
+Computing configuration 31 out of 50 (nat = 16)
+Computing configuration 32 out of 50 (nat = 16)
+Computing configuration 33 out of 50 (nat = 16)
+Computing configuration 34 out of 50 (nat = 16)
+Computing configuration 35 out of 50 (nat = 16)
+Computing configuration 36 out of 50 (nat = 16)
+Computing configuration 37 out of 50 (nat = 16)
+Computing configuration 38 out of 50 (nat = 16)
+Computing configuration 39 out of 50 (nat = 16)
+Computing configuration 40 out of 50 (nat = 16)
+Computing configuration 41 out of 50 (nat = 16)
+Computing configuration 42 out of 50 (nat = 16)
+Computing configuration 43 out of 50 (nat = 16)
+Computing configuration 44 out of 50 (nat = 16)
+Computing configuration 45 out of 50 (nat = 16)
+Computing configuration 46 out of 50 (nat = 16)
+Computing configuration 47 out of 50 (nat = 16)
+Computing configuration 48 out of 50 (nat = 16)
+Computing configuration 49 out of 50 (nat = 16)
+Computing configuration 50 out of 50 (nat = 16)
+Force computed shape: 50
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  19
+Minimization step, force computed: 50
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     117.55589434 meV
+Anharmonic contribution to free energy = -308491.91576859 +-       0.22448665 meV
+Free energy = -308374.35987425 +-       0.22448665 meV
+FC gradient modulus =      53.33262212 +-      85.36885845 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.39036331 meV/A
+Kong-Liu effective sample size =  49.9999692008167
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  20
+Minimization step, force computed: 50
+Good step found with 0.15000000000000002, try increment
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     117.55589434 meV
+Anharmonic contribution to free energy = -308491.91576859 +-       0.22448665 meV
+Free energy = -308374.35987425 +-       0.22448665 meV
+FC gradient modulus =      45.76513188 +-      85.37974344 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.39041837 meV/A
+Kong-Liu effective sample size =  49.9999692008167
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+ROOT  NAME: ./thermal_expansion/minim_t0
+SAVE  NAME: ./thermal_expansion/minim_t0
+FNAME NAME: None
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  21
+Minimization step, force computed: 50
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     117.55469315 meV
+Anharmonic contribution to free energy = -308491.91442268 +-       0.22446124 meV
+Free energy = -308374.35972953 +-       0.22446124 meV
+FC gradient modulus =      45.76513188 +-      85.37974344 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.39041837 meV/A
+Kong-Liu effective sample size =  49.99983849028925
+
+
+The gw gradient satisfy the convergence condition.
+Check the stopping criteria: Running =  True
+
+ # ---------------- NEW MINIMIZATION STEP --------------------
+Step ka =  22
+Minimization step, force computed: 50
+Good step found with 0.22500000000000003, try increment
+
+
+Number of symmetries before the step:  24
+Harmonic contribution to free energy =     117.55469315 meV
+Anharmonic contribution to free energy = -308491.91442268 +-       0.22446124 meV
+Free energy = -308374.35972953 +-       0.22446124 meV
+FC gradient modulus =      36.09260911 +-      85.39466500 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.39049349 meV/A
+Kong-Liu effective sample size =  49.99983849028925
+
+
+The gc gradient satisfy the convergence condition.
+
+The gw gradient satisfy the convergence condition.
+The system satisfy the convergence criteria according to the input.
+Check the stopping criteria: Running =  False
+ROOT  NAME: ./thermal_expansion/minim_t0
+SAVE  NAME: ./thermal_expansion/minim_t0
+FNAME NAME: None
+
+ * * * * * * * * 
+ *             * 
+ *   RESULTS   * 
+ *             * 
+ * * * * * * * * 
+
+
+Minimization ended after 22 steps
+
+Free energy = -308374.35972953 +-       0.22446124 meV
+FC gradient modulus =      36.09260911 +-      85.39466500 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.39049349 meV/A
+Kong-Liu effective sample size =  49.99983849028925
+
+Total force on the centroids [eV/A]:
+   0)       0.000000     -0.000000     -0.000000  +-      -0.000000      0.000000     -0.000000
+   1)      -0.000000      0.000000      0.000000  +-      -0.000000      0.000000     -0.000000
+
+
+ ==== STRESS TENSOR [GPa] ==== 
+     -0.00076058      0.00000000      0.00000000                0.00787638      0.00000000      0.00000000
+      0.00000000     -0.00076058      0.00000000    +-          0.00000000      0.00787638      0.00000000
+     -0.00000000      0.00000000     -0.00076058                0.00000000      0.00000000      0.00787638
+
+ Ab initio average stress [GPa]:
+     -0.14847648     -0.00000000      0.00000000
+     -0.00000000     -0.14847648      0.00000000
+      0.00000000      0.00000000     -0.14847648
+
+
+
+========================
+      TIMER REPORT      
+========================
+
+Threshold for printing: 5 %
+
+Function: get_fourier_gradient
+N = 3 calls took: 0 hours; 0 minutes; 0.85 seconds
+Average of 0.281984806060791 s per call
+Subroutine report:
+    Function: GoParallel
+    N = 3 calls took: 0 hours; 0 minutes; 0.84 seconds
+    Average of 0.28085025151570636 s per call
+    Subroutine report:
+        Function: compute
+        N = 3 calls took: 0 hours; 0 minutes; 0.84 seconds
+        Average of 0.2807942231496175 s per call
+        Subroutine report:
+
+
+    Function: fourier gradient julia
+    N = 3 calls took: 0 hours; 0 minutes; 0.84 seconds
+    Average of 0.28096747398376465 s per call
+
+
+Function: minimization_step
+N = 22 calls took: 0 hours; 0 minutes; 0.76 seconds
+Average of 0.034483660351146354 s per call
+Subroutine report:
+    Function: SymmetrizeFCQ
+    N = 22 calls took: 0 hours; 0 minutes; 0.21 seconds
+    Average of 0.00945215875452215 s per call
+
+    Function: Symmetrize
+    N = 22 calls took: 0 hours; 0 minutes; 0.21 seconds
+    Average of 0.009492018006064674 s per call
+
+    Function: update
+    N = 22 calls took: 0 hours; 0 minutes; 0.27 seconds
+    Average of 0.01239886067130349 s per call
+    Subroutine report:
+        Function: update_weights_fourier
+        N = 22 calls took: 0 hours; 0 minutes; 0.27 seconds
+        Average of 0.01235907728021795 s per call
+        Subroutine report:
+            Function: DiagonalizeSupercell
+            N = 22 calls took: 0 hours; 0 minutes; 0.18 seconds
+            Average of 0.00831416520205411 s per call
+            Subroutine report:
+                Function: DyagDinQ
+                N = 176 calls took: 0 hours; 0 minutes; 0.04 seconds
+                Average of 0.00020634044300426137 s per call
+
+                Function: Manipulate polarization vectors
+                N = 176 calls took: 0 hours; 0 minutes; 0.03 seconds
+                Average of 0.00017645413225347346 s per call
+
+
+            Function: Time to get SSCHA energy and forces
+            N = 22 calls took: 0 hours; 0 minutes; 0.02 seconds
+            Average of 0.0010743899778886275 s per call
+
+            Function: get upsilon fourier
+            N = 22 calls took: 0 hours; 0 minutes; 0.02 seconds
+            Average of 0.000806494192643599 s per call
+
+            Function: get uYu
+            N = 22 calls took: 0 hours; 0 minutes; 0.04 seconds
+            Average of 0.0016618641940030184 s per call
+
+
+
+
+
+ END OF TIMER REPORT 
+=====================
+
+
+ ======================
+ ENTHALPIC CONTRIBUTION
+ ======================
+
+ Current pressure P = -0.0008 +- 0.0079 GPa
+ Target pressure  P = 0.0000 GPa
+
+ For enthalpy we use the target pressure.
+
+ P = 0.0000 GPa   V = 40.3463 A^3
+
+ P V = 0.00000000e+00 eV
+
+ Helmoltz Free energy = -3.0837435973e+02 eV 
+ Gibbs Free energy = -3.0837435973e+02 eV <--
+ Zero energy = 0.0000000000e+00 eV
+
+ 
+[CELL] VOLUME: 40.34631678535821
+[CELL] unit_cell:
+Cell([[2.722228853286519, 2.722228853286519, -2.6033592320191136e-19], [2.722228853286519, -1.0413436928075911e-19, 2.722228853286519], [-8.500049932564735e-19, 2.722228853286519, 2.722228853286519]])
+[CELL] CURRENT STRAIN:
+[[ 2.48532609e-03 -6.36429382e-18  6.05127181e-18]
+ [-6.20778281e-18  2.48532609e-03  6.20778281e-18]
+ [-6.20778281e-18  6.20778281e-18  2.48532609e-03]]
+[CELL] NEW STRESS:
+[[-4.74714456e-06  3.03793008e-22  2.12655105e-21]
+ [ 6.07586015e-21 -4.74714456e-06  1.51896504e-21]
+ [-6.68344617e-21  6.37965316e-21 -4.74714456e-06]]
+GRAD MAT:
+[[ 1.92005812e-04 -1.35063433e-20 -8.48527408e-20]
+ [-2.46936803e-19  1.92005812e-04 -6.02479815e-20]
+ [ 2.69133635e-19 -2.56846244e-19  1.92005812e-04]]
+
+[CELL] y0 = 0.0011253175631047963 | y1 = 1.1156103932368531e-05
+[CELL] grad = [ 1.92005812e-04 -1.35063433e-20 -8.48527408e-20 -2.46936803e-19
+  1.92005812e-04 -6.02479815e-20  2.69133635e-19 -2.56846244e-19
+  1.92005812e-04]
+[CELL] lastgrad = [ 1.93676497e-02 -5.60863374e-19 -1.01982152e-18  1.01661256e-18
+  1.93676497e-02  2.13192140e-18  4.16514652e-18  3.70618838e-18
+  1.93676497e-02]
+[CELL]  GRADIENT DOT DIRECTION = 1.0100130047045919
+[CELL] New step:
+[CELL]    X_OLD = [ 2.48532609e-03 -6.36429382e-18  6.05127181e-18 -6.20778281e-18
+  2.48532609e-03  6.20778281e-18 -6.20778281e-18  6.20778281e-18
+  2.48532609e-03]   | ALPHA = 0.012301726464405992
+[CELL]    DIRECTION = [ 1.92005812e-04 -1.35063433e-20 -8.48527408e-20 -2.46936803e-19
+  1.92005812e-04 -6.02479815e-20  2.69133635e-19 -2.56846244e-19
+  1.92005812e-04]
+[CELL]    GRADIENT = [ 1.92005812e-04 -1.35063433e-20 -8.48527408e-20 -2.46936803e-19
+  1.92005812e-04 -6.02479815e-20  2.69133635e-19 -2.56846244e-19
+  1.92005812e-04]
+[CELL]    X_NEW = [ 2.48296409e-03 -6.36412767e-18  6.05231565e-18 -6.20474507e-18
+  2.48296409e-03  6.20852397e-18 -6.21109362e-18  6.21094247e-18
+  2.48296409e-03]
+[CELL]  Step number = 3
+
+NEW STRAIN:
+[[ 2.48296409e-03 -6.36412767e-18  6.05231565e-18]
+ [-6.20474507e-18  2.48296409e-03  6.20852397e-18]
+ [-6.21109362e-18  6.21094247e-18  2.48296409e-03]]
+NEW VOLUME: -40.34603160044756
+
+ Currently estimated bulk modulus =  108.679 GPa
+ (Note: this is just indicative, do not use it for computing bulk modulus)
+
+ 
+ New unit cell:
+ v1 [A] = (      2.72222244       2.72222244      -0.00000000)
+ v2 [A] = (      2.72222244       0.00000000       2.72222244)
+ v3 [A] = (     -0.00000000       2.72222244       2.72222244)
+
+Check the symmetries in the new cell:
+Symmetries of the bravais lattice: 48
+Symmetries of the crystal: 24
+Symmetries of the small group of q: 24
+Forcing the symmetries in the dynamical matrix.
+
+ * * * * * * * * 
+ *             * 
+ *   RESULTS   * 
+ *             * 
+ * * * * * * * * 
+
+
+Minimization ended after 22 steps
+
+Free energy = -308374.35972953 +-       0.22446124 meV
+FC gradient modulus =      36.09260911 +-      85.39466500 bohr^2
+Struct gradient modulus =       0.00000000 +-       0.39049349 meV/A
+Kong-Liu effective sample size =  49.99983849028925
+
+Total force on the centroids [eV/A]:
+   0)       0.000000      0.000000     -0.000000  +-      -0.000000      0.000000      0.000000
+   1)       0.000000     -0.000000     -0.000000  +-       0.000000      0.000000      0.000000
+
+
+ ==== STRESS TENSOR [GPa] ==== 
+     -0.00076058      0.00000000      0.00000000                0.00787638      0.00000000      0.00000000
+      0.00000000     -0.00076058      0.00000000    +-          0.00000000      0.00787638      0.00000000
+     -0.00000000      0.00000000     -0.00076058                0.00000000      0.00000000      0.00787638
+
+ Ab initio average stress [GPa]:
+     -0.14847648     -0.00000000      0.00000000
+     -0.00000000     -0.14847648      0.00000000
+      0.00000000      0.00000000     -0.14847648
+
+
+
+========================
+      TIMER REPORT      
+========================
+
+Threshold for printing: 5 %
+
+Function: get_fourier_gradient
+N = 3 calls took: 0 hours; 0 minutes; 0.85 seconds
+Average of 0.281984806060791 s per call
+Subroutine report:
+    Function: GoParallel
+    N = 3 calls took: 0 hours; 0 minutes; 0.84 seconds
+    Average of 0.28085025151570636 s per call
+    Subroutine report:
+        Function: compute
+        N = 3 calls took: 0 hours; 0 minutes; 0.84 seconds
+        Average of 0.2807942231496175 s per call
+        Subroutine report:
+
+
+    Function: fourier gradient julia
+    N = 3 calls took: 0 hours; 0 minutes; 0.84 seconds
+    Average of 0.28096747398376465 s per call
+
+
+Function: minimization_step
+N = 22 calls took: 0 hours; 0 minutes; 0.76 seconds
+Average of 0.034483660351146354 s per call
+Subroutine report:
+    Function: SymmetrizeFCQ
+    N = 22 calls took: 0 hours; 0 minutes; 0.21 seconds
+    Average of 0.00945215875452215 s per call
+
+    Function: Symmetrize
+    N = 22 calls took: 0 hours; 0 minutes; 0.21 seconds
+    Average of 0.009492018006064674 s per call
+
+    Function: update
+    N = 22 calls took: 0 hours; 0 minutes; 0.27 seconds
+    Average of 0.01239886067130349 s per call
+    Subroutine report:
+        Function: update_weights_fourier
+        N = 22 calls took: 0 hours; 0 minutes; 0.27 seconds
+        Average of 0.01235907728021795 s per call
+        Subroutine report:
+            Function: DiagonalizeSupercell
+            N = 22 calls took: 0 hours; 0 minutes; 0.18 seconds
+            Average of 0.00831416520205411 s per call
+            Subroutine report:
+                Function: DyagDinQ
+                N = 176 calls took: 0 hours; 0 minutes; 0.04 seconds
+                Average of 0.00020634044300426137 s per call
+
+                Function: Manipulate polarization vectors
+                N = 176 calls took: 0 hours; 0 minutes; 0.03 seconds
+                Average of 0.00017645413225347346 s per call
+
+
+            Function: Time to get SSCHA energy and forces
+            N = 22 calls took: 0 hours; 0 minutes; 0.02 seconds
+            Average of 0.0010743899778886275 s per call
+
+            Function: get upsilon fourier
+            N = 22 calls took: 0 hours; 0 minutes; 0.02 seconds
+            Average of 0.000806494192643599 s per call
+
+            Function: get uYu
+            N = 22 calls took: 0 hours; 0 minutes; 0.04 seconds
+            Average of 0.0016618641940030184 s per call
+
+
+
+
+
+ END OF TIMER REPORT 
+=====================
+

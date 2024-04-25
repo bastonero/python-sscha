@@ -158,7 +158,7 @@ def get_updated_sgp(n_types=2, power=2, multiple_cutoff=False, kernel_type="Norm
         mode="specific",
     )
 
-    print("sparse_indices", sgp.sparse_gp.sparse_indices)
+    # print("sparse_indices", sgp.sparse_gp.sparse_indices)
 
     return sgp
 

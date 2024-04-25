@@ -23,7 +23,9 @@ def main():
     """Run with AiiDA-QuantumESPRESSO + FLARE some ensemble configuration for testing."""
     # =========== GENERAL INPUTS =============== #
     np.random.seed(0)
-    number_of_configurations = 2
+    number_of_configurations = 10
+    batch_number = 3
+    check_time = 3
     temperature = 0.0
 
     # =========== AiiDA ENSEMBLE =============== #
@@ -59,13 +61,21 @@ def main():
             'prepend_text':'eval "$(conda shell.bash hook)"\nconda activate aiida-sscha\nexport OMP_NUM_THREADS=1',
         },
         electronic_type=ElectronicType.INSULATOR,
+        batch_number=batch_number,
+        check_time=check_time,
     )
 
     # =========== GENERATE & COMPUTE =============== #
     ensemble.generate(number_of_configurations)
     ensemble.compute_ensemble(**aiida_inputs) # this should include the training too
 
+    print()
+    print()
+    print("=============================================")
     print("First population has run.")
+    print("=============================================")
+    print()
+    print()
 
     ensemble.generate(number_of_configurations)  # here hopefully the model is called
     ensemble.compute_ensemble(**aiida_inputs)

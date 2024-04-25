@@ -1,4 +1,10 @@
-"""Example of an actual AiiDA-powered SSCHA run."""
+start_index = -energies.index(min(energies))
+for scale_factor in scale_factors:
+    scaled_atoms = atoms.copy()
+    scaled_atoms.calc = flare_calc
+    scaled_atoms.set_cell(scaled_atoms.get_cell() * scale_factor ** (1 / 3), scale_atoms=True)
+    run_phonons(scaled_atoms, filename=f'./thermal_properties.yaml-{start_index}')
+    start_index += 1"""Example of an actual AiiDA-powered SSCHA run."""
 import os
 import numpy as np
 

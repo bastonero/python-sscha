@@ -41,6 +41,7 @@ class AiiDAEnsemble(Ensemble):
         group_label: str | None = None,
         waiting_time: int | float = 2.5,
         batch_number: int = 1,
+        check_time: int = 60,
         **kwargs
     ) -> None:
         """Compute ensemble properties.
@@ -57,6 +58,7 @@ class AiiDAEnsemble(Ensemble):
                 For example: 2 would submit two batches, computing the first one, then the second.
                 This is particularly useful when performing on-the-fly simulations, so that the ML potential
                 can be trained on previous batches and (hopefully) predict on the following batches.
+            check_time: Seconds to wait before checking the status of the submitted workchains
             kwargs: The kwargs for the get_builder_from_protocol
 
         """
@@ -82,14 +84,16 @@ class AiiDAEnsemble(Ensemble):
                 pass
 
         structures = copy(self.structures)
+        dft_counts = 0
         dft_indices_batches = split_array(list(range(len(structures))), batch_number)  # store here the indices to run with DFT/AiiDA
         
         if batch_number > 1:
             print(f"Submission in batches is active. Number of batches that will be submitted: {batch_number}")
         
         for batch_n, dft_indices in enumerate(dft_indices_batches):
+            dft_indices = dft_indices.tolist()
             if batch_number > 1:
-                print(f"Batch submitted: {batch_n}/{batch_number}")
+                print(f"Batch submitted: {batch_n+1}/{batch_number}")
             
             # ================ FLARE SECTION ================= #
             # If a model is specified and it's not empty, try to predict.
@@ -105,68 +109,72 @@ class AiiDAEnsemble(Ensemble):
                 
                 if len(self.gp_model.training_data) > 0:
                     self._predict_with_model(structures, dft_indices)
+                
+            dft_counts += len(dft_indices)
 
             # ================= AIIDA SECTION  ================ #
-            workchains = submit_and_get_workchains(
-                structures=[structures[i] for i in dft_indices],
-                pw_code=pw_code,
-                temperature=self.current_T,
-                dft_indices=dft_indices,
-                protocol=protocol,
-                options=options,
-                overrides=overrides,
-                waiting_time=waiting_time,
-                **kwargs
-            )
+            if len(dft_indices) > 0:
+                workchains = submit_and_get_workchains(
+                    structures=[structures[i] for i in dft_indices],
+                    pw_code=pw_code,
+                    temperature=self.current_T,
+                    dft_indices=dft_indices,
+                    protocol=protocol,
+                    options=options,
+                    overrides=overrides,
+                    waiting_time=waiting_time,
+                    **kwargs
+                )
 
-            if group:
-                group.add_nodes(workchains)
+                if group:
+                    group.add_nodes(workchains)
 
-            workchains_copy = copy(workchains)
-            while workchains_copy:
-                workchains_copy = get_running_workchains(workchains_copy, self.force_computed)
-                if workchains_copy:
-                    time.sleep(60)  # wait before checking again
+                workchains_copy = copy(workchains)
+                while workchains_copy:
+                    workchains_copy = get_running_workchains(workchains_copy, self.force_computed)
+                    if workchains_copy:
+                        time.sleep(check_time)  # wait before checking again
+                
+                # ================ UPDATE SECTION ================ #
+                for i, is_computed in enumerate(self.force_computed):
+                    if is_computed and i in dft_indices:
+                        dft_stress = None
+                        wc = workchains[dft_indices.index(i)]
 
-            for i, is_computed in enumerate(self.force_computed):
-                if is_computed and i in dft_indices:
-                    dft_stress = None
-                    wc = workchains[dft_indices.index(i)]
+                        dft_energy = wc.outputs.output_parameters.dict.energy
+                        dft_forces = wc.outputs.output_trajectory.get_array('forces')[-1]
 
-                    dft_energy = wc.outputs.output_parameters.dict.energy
-                    dft_forces = wc.outputs.output_trajectory.get_array('forces')[-1]
+                        self.energies[i] = dft_energy / CONSTANTS.ry_to_ev # eV     -> Ry
+                        self.forces[i] = dft_forces / CONSTANTS.ry_to_ev   # eV/Ang -> Ry/Ang
 
-                    self.energies[i] = dft_energy / CONSTANTS.ry_to_ev
-                    self.forces[i] = dft_forces / CONSTANTS.ry_to_ev
+                        if self.has_stress:
+                            stress = wc.outputs.output_trajectory.get_array('stress')[-1]
 
-                    if self.has_stress:
-                        stress = wc.outputs.output_trajectory.get_array('stress')[-1]
+                            self.stresses[i, :, :] = stress * gpa_to_rybohr3 # GPa -> Ry/(Bohr^3)
 
-                        self.stresses[i] = stress * gpa_to_rybohr3
+                            dft_stress = ase_stress_units * np.array([
+                                stress[0, 0], stress[1, 1], stress[2, 2], 
+                                stress[1, 2], stress[0, 2], stress[0, 1],
+                            ]) # GPa -> -eV/(Ang^3)
 
-                        dft_stress = ase_stress_units * np.array([
-                            stress[0, 0], stress[1, 1], stress[2, 2], 
-                            stress[1, 2], stress[0, 2], stress[0, 1],
-                        ])
+                        if self.gp_model is not None:
+                            self._update_gp(
+                                FLARE_Atoms.from_ase_atoms(wc.inputs.pw.structure.get_ase()),
+                                dft_frcs=dft_forces,
+                                dft_energy=dft_energy,
+                                dft_stress=dft_stress,
+                            )
 
-                    if self.gp_model is not None:
-                        self._update_gp(
-                            FLARE_Atoms.from_ase_atoms(wc.inputs.pw.structure.get_ase()),
-                            dft_frcs=dft_forces,
-                            dft_energy=dft_energy,
-                            dft_stress=dft_stress,
-                        )
-
-            # ================ TRAIN SECTION ================ #
-            if self.gp_model is not None:
-                self._train_gp()
-                self._write_model()
+                # ================ TRAIN SECTION ================ #
+                if self.gp_model is not None:
+                    self._train_gp()
+                    self._write_model()
 
         # ================ FINALIZE ================ #
-        if self.has_stress:
-            self.stress_computed = copy(self.force_computed)
+        # if self.has_stress:
+        #     self.stress_computed = copy(self.force_computed)
 
-        self._clean_runs(dft_indices)
+        self._clean_runs(dft_counts)
 
     def _predict_with_model(
         self,
@@ -180,11 +188,11 @@ class AiiDAEnsemble(Ensemble):
         Args:
         ----
             structures: list of :class:`~cellconstructor.Structure.Structure` to simulate
-            sub_indices: list of integers related to the structures batch
             dft_indices: list of integers related to the structures
 
         """
-        sub_indices = copy(dft_indices)
+        sub_indices = deepcopy(dft_indices)
+
         for index in sub_indices:
             structure = structures[index]
             atoms = FLARE_Atoms.from_ase_atoms(structure.get_ase_atoms())
@@ -215,12 +223,11 @@ class AiiDAEnsemble(Ensemble):
                 print(f"[BFFS  USED] For structure with id={index}")
                 dft_indices.remove(index)  # remove index computed via ML-FF
     
-                self.energies[index] = atoms.potential_energy / units.Ry
-                self.forces[index] = deepcopy(atoms.forces) / units.Ry
+                self.energies[index] = deepcopy(atoms.get_potential_energy()) / units.Ry # eV -> Ry
+                self.forces[index] = deepcopy(atoms.get_forces()) / units.Ry # eV/Ang -> Ry/Ang
                 if self.has_stress:
-                    self.stresses[index] = -1 * deepcopy(
-                        atoms.get_stress(voigt=False)
-                    ) * units.Bohr**3 / units.Ry
+                    self.stresses[index, :, :] = -1 * deepcopy(atoms.get_stress(voigt=False)) * (units.Bohr**3 / units.Ry) # -eV/(Ang^3) -> Ry/(Bohr^3)
+                    self.stress_computed[index] = True
 
                 self.force_computed[index] = True
     
@@ -261,7 +268,7 @@ class AiiDAEnsemble(Ensemble):
                 local environments will be added to the training set.
             dft_frcs (np.ndarray): DFT forces on all atoms in the structure, in eV/Angstrom.
             dft_energy (float): total energy of the entire structure, in eV.
-            dft_stress (np.ndarray): DFT forces on all atoms in the structure.
+            dft_stress (np.ndarray): DFT stress on structure.
                 Sign as in ASE (-1 in respect with QE), units in eV/Angstrom^3,
                 and in Voigt notation, i.e. (xx, yy, zz, yz, xz, xy).
 
@@ -270,7 +277,11 @@ class AiiDAEnsemble(Ensemble):
 
         tic = time.time()
         is_empty_model = len(self.gp_model.training_data) == 0
-        
+
+        # Here we make the decision to skip adding environments, if the stds 
+        # are within the user-defined boundaries, even if the ab-initio calculation
+        # was performed. This avoids slowing down the model, while the SSCHA
+        # is feeded with the DFT results.
         if is_empty_model:
             std_in_bound = False
             train_atoms = self.init_atoms
@@ -296,9 +307,6 @@ class AiiDAEnsemble(Ensemble):
 
             self.output.write_wall_time(tic, task='Env Selection')
 
-        # Here we make the decision to skip adding environments even if the
-        # DFT calculation was performed. This avoids slowing down the model,
-        # while the SSCHA is feeded with the DFT results.
         if not std_in_bound:
             if not is_empty_model:
                 stds = self.flare_calc.results.get('stds', np.zeros_like(dft_frcs))
@@ -360,12 +368,12 @@ class AiiDAEnsemble(Ensemble):
             hyps_mask=self.gp_model.hyps_mask,
         )
         
-    def _clean_runs(self, dft_indices: list[int]) -> None:
+    def _clean_runs(self, dft_counts: int) -> None:
         """Clean the failed runs and print summary.
         
         Args:
         ----
-            dft_indices (list[int]): list of performed dft indices calculations.
+            dft_counts (int): number of performed DFT calculations.
  
         """
         n_calcs = np.sum(self.force_computed.astype(int))
@@ -373,7 +381,7 @@ class AiiDAEnsemble(Ensemble):
         print('Total structures included: ', n_calcs)
         print('Structures not included  : ', self.N-n_calcs)
         if self.gp_model is not None:
-            print('Steps using OTF-ML model : ', self.N-len(dft_indices))
+            print('Steps using OTF-ML model : ', self.N-dft_counts)
         print()
         print('===================== END OF SUMMARY ===================== \n')
         if n_calcs != self.N:
