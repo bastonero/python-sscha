@@ -175,6 +175,7 @@ class AiiDAEnsemble(Ensemble):
         #     self.stress_computed = copy(self.force_computed)
 
         self._clean_runs(dft_counts)
+        self.init()
 
     def _predict_with_model(
         self,

@@ -11,3 +11,4 @@ rm *.dat
 rm *.pdf
 rm otf_run*
 rm input_tmp.in
+rm log*
