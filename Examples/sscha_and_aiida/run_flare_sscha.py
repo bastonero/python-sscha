@@ -18,7 +18,7 @@ def main():
     # =========== GENERAL INPUTS =============== #
     np.random.seed(0)
     number_of_configurations = 50
-    max_iterations = 3
+    max_iterations = 10
     temperature_i = 0
     temperature_f = 0
     temperature_step = 10

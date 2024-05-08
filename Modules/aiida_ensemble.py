@@ -170,8 +170,9 @@ class AiiDAEnsemble(Ensemble):
 
                 # ================ TRAIN SECTION ================ #
                 if self.gp_model is not None:
-                    self._train_gp()
-                    self._write_model()
+                    if dft_counts > 0:
+                        self._train_gp()
+                        self._write_model()
                 
                 sys.stdout.flush()
 

@@ -28,7 +28,7 @@ def main():
     number_of_configurations = 50
     batch_number = 1
     check_time = 3
-    max_iterations = 3
+    max_iterations = 10
     temperature = 0
     pressure = 0
     meaningful_factor = 0.5
