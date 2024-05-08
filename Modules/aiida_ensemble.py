@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from copy import copy, deepcopy
 import time
+import sys
 
 from ase import units
 from cellconstructor.Structure import Structure
@@ -126,6 +127,8 @@ class AiiDAEnsemble(Ensemble):
                     **kwargs
                 )
 
+                sys.stdout.flush()
+
                 if group:
                     group.add_nodes(workchains)
 
@@ -169,6 +172,8 @@ class AiiDAEnsemble(Ensemble):
                 if self.gp_model is not None:
                     self._train_gp()
                     self._write_model()
+                
+                sys.stdout.flush()
 
         # ================ FINALIZE ================ #
         # if self.has_stress:
@@ -231,6 +236,8 @@ class AiiDAEnsemble(Ensemble):
                     self.stress_computed[index] = True
 
                 self.force_computed[index] = True
+            
+            sys.stdout.flush()
     
 
     def _compute_properties(self, atoms: FLARE_Atoms) -> None:
