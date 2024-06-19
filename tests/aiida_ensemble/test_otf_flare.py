@@ -74,6 +74,7 @@ def test_no_otf(generate_ensemble):
     assert ensemble.checkpt_files is None
     assert ensemble.write_model is None 
     assert ensemble.init_atoms is None 
+    assert ensemble.train_hyps is None 
 
 
 def test_set_otf(generate_ensemble):
@@ -83,6 +84,7 @@ def test_set_otf(generate_ensemble):
     ensemble.set_otf(flare_calc, max_atoms_added=-1)
     
     assert ensemble.gp_model is not None
+    assert ensemble.train_hyps == (100,120)
 
 
 def test_compute_properties(generate_ensemble):

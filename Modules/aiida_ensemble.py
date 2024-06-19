@@ -171,7 +171,8 @@ class AiiDAEnsemble(Ensemble):
                 # ================ TRAIN SECTION ================ #
                 if self.gp_model is not None:
                     if dft_counts > 0:
-                        self._train_gp()
+                        if self.train_hyps[0] <= len(self.gp_model.training_data) <= self.train_hyps[1]:
+                            self._train_gp()
                         self._write_model()
                 
                 sys.stdout.flush()

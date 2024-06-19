@@ -194,6 +194,7 @@ class Ensemble:
         self.checkpt_files = None
         self.write_model = None
         self.init_atoms = None
+        self.train_hyps = None
 
         # The frequencies and polarizations of the ensemble
         # In q space
@@ -4239,6 +4240,7 @@ Error while loading the julia module.
         update_threshold: float | None = None,
         # other args
         build_mode="bayesian",
+        train_hyps: tuple = (100,120), 
     ):
         """Set on-the-fly training.
         
@@ -4299,6 +4301,12 @@ Error while loading the julia module.
         ]
 
         self.write_model = write_model
+        
+        if train_hyps[0] == "inf":
+            train_hyps[0] = np.inf
+        if train_hyps[1] == "inf":
+            train_hyps[1] = np.inf
+        self.train_hyps = train_hyps
 
 
 #-------------------------------------------------------------------------------
