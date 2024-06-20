@@ -25,6 +25,7 @@ except ImportError:
 
 try:
     from flare.atoms import FLARE_Atoms
+    from flare.io.output import compute_mae
     from flare.learners.utils import get_env_indices, is_std_in_bound
 except ImportError:
     pass
@@ -317,6 +318,19 @@ class AiiDAEnsemble(Ensemble):
 
             self.output.write_wall_time(tic, task='Env Selection')
 
+            # compute mae and write to output
+            e_mae, e_mav, f_mae, f_mav, s_mae, s_mav = compute_mae(
+                atoms,
+                self.output.basename,
+                atoms.potential_energy,
+                atoms.forces,
+                atoms.stress,
+                dft_energy,
+                dft_frcs,
+                dft_stress,
+                self.force_only,
+            )
+
         if not std_in_bound:
             if not is_empty_model:
                 stds = self.flare_calc.results.get('stds', np.zeros_like(dft_frcs))
@@ -339,7 +353,7 @@ class AiiDAEnsemble(Ensemble):
                 'forces': dft_frcs,
                 'energy': dft_energy,
                 'free_energy': dft_energy,
-                'stress': flare_stress,
+                'stress': dft_stress,
             }
 
             atoms.calc = SinglePointCalculator(atoms, **results)
