@@ -328,7 +328,7 @@ class AiiDAEnsemble(Ensemble):
                 dft_energy,
                 dft_frcs,
                 dft_stress,
-                self.force_only,
+                False,
             )
 
         if not std_in_bound:
