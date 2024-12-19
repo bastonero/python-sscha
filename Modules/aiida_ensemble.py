@@ -426,7 +426,7 @@ def get_running_workchains(workchains: list[WorkChainNode], success: list[bool])
     wcs_left = copy(workchains)
 
     for workchain in workchains:
-        if workchain.is_finished:
+        if workchain.is_terminated:
             if workchain.is_failed:
                 print(f'[FAILURE] for <PwBaseWorkChain> with PK={workchain.pk}')
             else:
