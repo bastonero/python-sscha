@@ -216,6 +216,7 @@ class SSCHA_Minimizer(object):
 
         # Setup the meaningful_factor
         self.meaningful_factor = meaningful_factor
+        self.abs_conv_thr = 1e-8 # Below this number the minimization is considered converged
 
         # Setup the minimization algorithm
         self.minimization_algorithm = minimization_algorithm
@@ -935,6 +936,7 @@ Error, exceeded the maximum number of step with an imaginary frequency ({}).
         print (" number of configurations = ", self.ensemble.N)
         print (" max number of steps (infinity if negative) = ", self.max_ka)
         print (" meaningful factor = ", self.meaningful_factor)
+        print (" absolute convergence threshold = ", self.abs_conv_thr)
         print (" gradient to watch (for stopping) = ", self.gradi_op)
         print (" Kong-Liu minimum effective sample size = ", self.ensemble.N * self.kong_liu_ratio)
         print (" (Kong-Liu ratio = ", self.kong_liu_ratio, ")")
@@ -946,7 +948,7 @@ Error, exceeded the maximum number of step with an imaginary frequency ({}).
         print (" use spglib = ", self.use_spglib)
         if self.use_spglib:
             import spglib
-            print (" Symmetry group = {}".format(spglib.get_spacegroup(self.dyn.structure.get_ase_atoms())))
+            print (" Symmetry group = {}".format(spglib.get_spacegroup(self.dyn.structure.get_spglib_cell())))
         print (" Number of symmetries in the unit cell = ", self.N_symmetries)
 
         print ()
@@ -1095,7 +1097,7 @@ Maybe data_dir is missing from your input?"""
 
                 import spglib
                 if verbosity:
-                    print("Symmetry group: ", spglib.get_spacegroup(self.dyn.structure.get_ase_atoms()))
+                    print("Symmetry group: ", spglib.get_spacegroup(self.dyn.structure.get_spglib_cell()))
 
                 self.N_symmetries = qe_sym.QE_nsym
 
@@ -1335,7 +1337,7 @@ WARNING, the preconditioning is activated together with a root representation.
                 print ("")
                 print("Number of symmetries before the step: ", self.N_symmetries)
                 if self.use_spglib:
-                    print("Group space: ", spglib.get_spacegroup(self.dyn.structure.get_ase_atoms()))
+                    print("Group space: ", spglib.get_spacegroup(self.dyn.structure.get_spglib_cell()))
                 print ("Harmonic contribution to free energy = %16.8f meV" % (harm_fe * __RyTomev__))
                 print ("Anharmonic contribution to free energy = %16.8f +- %16.8f meV" % (anharm_fe * __RyTomev__,
                                                                                          np.real(err) * __RyTomev__))
@@ -1502,10 +1504,11 @@ WARNING, the preconditioning is activated together with a root representation.
             pols = self.ensemble.current_pols.copy()
 
             #w, pols = super_dyn.DyagDinQ(0)
-            trans = CC.Methods.get_translations(pols, super_struct.get_masses_array())
+            trans = super_struct.get_asr_modes(pols)
+            # trans = CC.Methods.get_translations(pols, super_struct.get_masses_array())
 
             for i in range(len(w)):
-                print ("Mode %5d:   freq %16.8f cm-1  | is translation? " % (i+1, w[i] * __RyToCm__), trans[i])
+                print ("Mode %5d:   freq %16.8f cm-1  | is asr? " % (i+1, w[i] * __RyToCm__), trans[i])
 
             print ()
 
@@ -1533,7 +1536,8 @@ WARNING, the preconditioning is activated together with a root representation.
 
         # Get translations
         if not self.ensemble.ignore_small_w:
-            trans_mask = ~CC.Methods.get_translations(pols, ss.get_masses_array())
+            trans_mask = ~ss.get_asr_modes(pols)
+            # trans_mask = ~CC.Methods.get_translations(pols, ss.get_masses_array())
         else:
             trans_mask = np.abs(w) > CC.Phonons.__EPSILON_W__
 
@@ -1554,7 +1558,8 @@ WARNING, the preconditioning is activated together with a root representation.
             #ss0 = self.ensemble.dyn_0.structure.generate_supercell(self.dyn.GetSupercell())
 
             if not self.ensemble.ignore_small_w:
-                trans_mask = ~CC.Methods.get_translations(pold, ss.get_masses_array())
+                trans_mask = ~ss.get_asr_modes(pold)
+                # trans_mask = ~CC.Methods.get_translations(pold, ss.get_masses_array())
             else:
                 trans_mask = np.abs(wold) > CC.Phonons.__EPSILON_W__
 
@@ -1616,6 +1621,11 @@ You can try to fix this error setting the {} variable of {} class to True.
 
         gc_cond = (last_gc < last_gc_err * self.meaningful_factor)
         gw_cond = (last_gw < last_gw_err * self.meaningful_factor)
+
+        # Add a condition on the absolute value of the gradient
+        # (For perfectly harmonic systems, the error goes to zero)
+        gc_cond = gc_cond or (last_gc < self.abs_conv_thr)
+        gw_cond = gw_cond or (last_gw < self.abs_conv_thr)
 
         total_cond = False
 
@@ -1938,7 +1948,8 @@ def ApplyLambdaTensor(current_dyn, matrix, T = 0):
     w, pols = current_dyn.DyagDinQ(0)
 
     # Get the translations
-    trans = ~CC.Methods.get_translations(pols, current_dyn.structure.get_masses_array())
+    trans = ~current_dyn.structure.get_asr_modes(pols)
+    # trans = ~CC.Methods.get_translations(pols, current_dyn.structure.get_masses_array())
 
     # Restrict only to non translational modes
     w = np.real(w[trans])
@@ -2002,7 +2013,8 @@ def ApplyFCPrecond(current_dyn, matrix, T = 0):
     w, pols = current_dyn.DyagDinQ(0)
 
     # Get the translations
-    trans = ~CC.Methods.get_translations(pols, current_dyn.structure.get_masses_array())
+    trans = ~current_dyn.structure.get_asr_modes(pols)
+    #trans = ~CC.Methods.get_translations(pols, current_dyn.structure.get_masses_array())
 
     # Restrict only to non translational modes
     w = np.real(w[trans])
@@ -2093,7 +2105,8 @@ def GetStructPrecond(current_dyn, ignore_small_w = False, w_pols = None):
 
     # Select translations
     if not ignore_small_w:
-        not_trans = ~CC.Methods.get_translations(pols, mass)
+        not_trans = ~current_dyn.structure.get_asr_modes(pols)
+        # not_trans = ~CC.Methods.get_translations(pols, mass)
     else:
         not_trans = np.abs(w) > CC.Phonons.__EPSILON_W__
 
