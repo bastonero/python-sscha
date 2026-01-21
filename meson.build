@@ -207,9 +207,17 @@ py.install_sources([
   'Modules/Relax.py',
   'Modules/SchaMinimizer.py',
   'Modules/Tools.py',
-  'Modules/Utilities.py'
+  'Modules/Utilities.py',
   ],
   subdir: 'sscha',
+)
+
+py.install_sources(
+  [
+    'Modules/ml/__init__.py',
+    'Modules/ml/flare.py',
+  ],
+  subdir: 'sscha/ml',
 )
 
 # --- Installing Scripts ---

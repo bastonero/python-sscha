@@ -4265,7 +4265,7 @@ Error while loading the julia module.
         update_threshold: float | None = None,
         # other args
         build_mode="bayesian",
-        train_hyps: tuple = (100,120), 
+        train_hyps: tuple = (1,np.inf), 
     ):
         """Set on-the-fly training.
         
