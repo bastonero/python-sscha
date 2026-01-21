@@ -16,36 +16,46 @@ from aiida import load_profile
 from aiida_quantumespresso.common.types import ElectronicType
 
 from flare.bffs.sgp.calculator import SGP_Calculator
-from get_sgp import get_empty_sgp
+from sscha.ml.flare import get_model
 
 load_profile()
+
+
+structure_filename        = 'Si.pwi'
+supercell                 = [2,2,2]
+temperature               = 300
+pressure                  = 0
+number_of_configurations  = 50
+flare_config_filename     = 'flare_config.yaml'
+std_tolerance_factor      = -0.01
+update_threshold          = abs(std_tolerance_factor * 0.1)
+seed_number               = 0
+batch_number              = number_of_configurations
+check_time                = 3
+max_iterations            = 10
+meaningful_factor         = 0.01
+kong_liu_ratio            = 0.5
+minimization_step         = 0.1
 
 
 def main():
     """Run with AiiDA-QuantumESPRESSO + FLARE + SSCHA @ NPT."""
     # =========== GENERAL INPUTS =============== #
-    np.random.seed(0)
-    number_of_configurations = 50
-    batch_number = 1
-    check_time = 3
-    max_iterations = 10
-    temperature = 0
-    pressure = 0
-    meaningful_factor = 0.5
-    kong_liu_ratio = 0.5
-    minimization_step = 0.1
-    supercell = [2,2,2]
-
-    atoms = read('./Si.pwi') # bulk('Si')
-    structure = Structure()
-    structure.generate_from_ase_atoms(atoms)
+    np.random.seed(seed_number)
+    atoms = read(structure_filename)
 
     # =========== FLARE MODEL =============== #
-    flare_calc, _ = SGP_Calculator.from_file('./model.json')
-    # flare_calc = SGP_Calculator(get_empty_sgp(n_types=1, the_map={14: 0}, the_atom_energies={0: -154.272015018195}))
+    # flare_calc, _ = SGP_Calculator.from_file('./model.json') # if you already have a model
+    flare_calc, _ = get_model(flare_config_filename)
 
     # =========== DYNAMICAL MATRIX =============== #
-    dyn = compute_phonons_finite_displacements(structure, flare_calc, supercell=supercell)
+    dyn = Phonons("Si-dynamical-matrix", nqirr=3)
+    
+    # (*) If you have a pre-existing model, you can compute the dynamical matrix with it
+    # structure = Structure()
+    # structure.generate_from_ase_atoms(atoms)
+    # dyn = compute_phonons_finite_displacements(structure, flare_calc, supercell=supercell)
+    
     dyn.Symmetrize()
     dyn.ForcePositiveDefinite()
     
@@ -53,10 +63,11 @@ def main():
     ensemble = AiiDAEnsemble(dyn, temperature)
     ensemble.set_otf(
         flare_calc, 
-        std_tolerance_factor=-0.9, 
+        std_tolerance_factor=std_tolerance_factor, 
         max_atoms_added=-1, 
-        update_threshold=0.5,
+        update_threshold=update_threshold,
         update_style="threshold",
+        train_hyps=(1,np.inf),
     )
 
     # =========== AiiDA INPUTS =============== #

@@ -17,28 +17,33 @@ def main():
     """Run with FLARE + SSCHA @ NPT."""
     # =========== GENERAL INPUTS =============== #
     np.random.seed(0)
-    number_of_configurations = 50
-    max_iterations = 10
-    temperature_i = 0
-    temperature_f = 0
-    temperature_step = 10
-    pressure = 0
-    meaningful_factor = 0.5
-    kong_liu_ratio = 0.5
-    minimization_step = 0.1
-    supercell = [2,2,2]
-    restart_from_previous_dyn = False
-    restart_from_ens = False
+    structure_filename        = 'Si.pwi'
+    number_of_configurations  = 50
+    max_iterations            = 10
+    temperature_i             = 300
+    temperature_f             = 300
+    temperature_step          = 10
+    pressure                  = 0
+    meaningful_factor         = 0.01
+    kong_liu_ratio            = 0.5
+    minimization_step         = 0.1
+    supercell                 = [2,2,2]
+    restart_from_previous_dyn = True
+    restart_from_ens          = False
     
-    atoms = read('./Si.pwi')
-    structure = Structure()
-    structure.generate_from_ase_atoms(atoms)
+    atoms = read(structure_filename)
 
     # =========== FLARE MODEL =============== #
-    flare_calc, _ = SGP_Calculator.from_file('./model.json')
+    flare_calc, _ = SGP_Calculator.from_file('./otf_run_flare.json')
     
     # =========== DYNAMICAL MATRIX =============== #
-    dyn = compute_phonons_finite_displacements(structure, flare_calc, supercell=supercell)
+    dyn = Phonons("Si-dynamical-matrix", nqirr=3)
+    
+    # (*) If you have a pre-existing model, you can compute the dynamical matrix with it
+    # structure = Structure()
+    # structure.generate_from_ase_atoms(atoms)
+    # dyn = compute_phonons_finite_displacements(structure, flare_calc, supercell=supercell)
+    
     dyn.Symmetrize()
     dyn.ForcePositiveDefinite()
 

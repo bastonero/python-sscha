@@ -17,7 +17,6 @@ from get_sgp import get_empty_sgp
 
 load_profile()
 
-# PID: 1013277
 
 def main():
     """Run with AiiDA-QuantumESPRESSO + FLARE some ensemble configuration for testing."""
