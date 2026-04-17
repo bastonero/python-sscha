@@ -224,6 +224,9 @@ Error, increment must be bigger than 1 and decrement lower than 1.
             # Enlarge the step
             if not self.fixed_step:
                 self.step *= self.increment_step
+            
+            # Perform the minimization step for new direction
+            self.current_x = self.old_x - self.step * self.direction
         else:
             # Proceed with the line minimization
 
@@ -243,14 +246,16 @@ Error, increment must be bigger than 1 and decrement lower than 1.
                     print("Step too large (scalar = {} | kl_ratio = {}), reducing to {}".format(scalar, kl_ratio, self.step))
                     #print("Direction: ", self.direction)
                     #print("Gradient: ", gradient)
+                
+                # Try again with reduced step
+                self.current_x = self.old_x - self.step * self.direction
             else:
                 # The step is good, therefore next step perform a new direction
                 self.new_direction = True
                 if self.verbose:
                     print("Good step found with {}, try increment".format(self.step))
-
-        # Perform the minimiziation step
-        self.current_x = self.old_x - self.step * self.direction
+                # DO NOT update current_x - we accept the current position
+                # (current_x was already updated in the previous step)
 
 
     def update_dyn(self, new_kl_ratio, dyn_gradient, structure_gradient = None):

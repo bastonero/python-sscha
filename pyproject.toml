@@ -4,7 +4,7 @@ build-backend = "mesonpy"
 
 [project]
 name = "python-sscha"
-version = "1.5.0"
+version = "1.6.0"
 description = "Python implementation of the sscha code"
 authors = [{name = "Lorenzo Monacelli"}] # Put here email
 readme = "README.md"
@@ -22,6 +22,10 @@ dependencies = [
 # If you have scripts that you want to be installed and executable
 # entries = { scripts = ["scripts/sscha", "scripts/cluster_check.x", ...] }
 # However, Meson is better at handling scripts like install_data
+
+[project.scripts]
+sscha-plot-data="sscha.cli:plot_data"
+sscha="sscha.cli:main"
 
 [project.urls]
 Homepage = "https://sscha.eu/"

@@ -964,11 +964,11 @@ Error, exceeded the maximum number of step with an imaginary frequency ({}).
         print (" supercell size = ", " ".join([str(x) for x in self.ensemble.supercell]))
 
         # Get the current frequencies
-        w, pols = self.dyn.GenerateSupercellDyn(self.ensemble.supercell).DyagDinQ(0)
+        w, pols = self.dyn.DiagonalizeSupercell()#self.dyn.GenerateSupercellDyn(self.ensemble.supercell).DyagDinQ(0)
         w *= __RyToCm__
 
         # Get the starting frequencies
-        w0, p0 = self.ensemble.dyn_0.GenerateSupercellDyn(self.ensemble.supercell).DyagDinQ(0)
+        w0, p0 = self.ensemble.dyn_0.DiagonalizeSupercell()
         w0 *= __RyToCm__
 
         print ()

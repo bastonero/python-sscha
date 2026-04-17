@@ -78,7 +78,7 @@ function get_gradient_fourier!(Φ_grad :: Array{Complex{T}, 3},
                     for i in 1:n_random
                         tmp = v_tilde[i, j, jq] * conj(δf_tilde[i, k, jq])
                         Φ_grad[j, k, jq] += tmp * weights[i]
-                        Φ_grad_err[j, k, jq] += tmp * conj(tmp) * weights[i]
+                        Φ_grad_err[j, k, jq] += abs2(tmp)  * weights[i]
 
                         # @views mul!(tmp, v_tilde[:, jq, i], δf_tilde[:, jq, i]')  
                         # @. tmp2 = tmp * conj(tmp)
@@ -103,9 +103,10 @@ function get_gradient_fourier!(Φ_grad :: Array{Complex{T}, 3},
     begin
         tmp_grad = zeros(Complex{T}, (3*nat, 3*nat, nq))
         for iq in 1:nq
-            @views Φ_grad[:, :, iq] .+= Φ_grad[:, :, iq]'
             @views tmp_grad[:, :, iq] .= Φ_grad[:, :, iq]
+            @views tmp_grad[:, :, iq] .+= Φ_grad[:, :, iq]'
         end
+        Φ_grad .= tmp_grad
         for iq in 1:nq
             @views tmp_grad[:, :, iq] .+= conj.(Φ_grad[:, :, minus_q_index[iq]]')
         end

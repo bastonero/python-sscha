@@ -4334,7 +4334,57 @@ Error while loading the julia module.
         self.train_hyps = train_hyps
 
 
+
+
+
+# ------------------------------------------------------------------------------
+def load_ensemble_bin(directory, population, temperature, nqirr=-1):
+    """
+    Load the ensemble from the given directory. This subroutine automatically initializes the ensemble
+    and avoids the hursle of having to define and initialize a dynamical matrix before loading the ensemble.
+
+
+    Parameters
+    ----------
+        - directory : string
+            Path to the directory where the ensemble is located
+        - population : Int
+            The index of the ensemble
+        - temperature : Float
+            The temperature for the ensemble
+        - nqirr : Int
+            The number of irreducible points of the dynamical matrix.
+            If not provided (or negative), it is inferred from the files.
+
+    Returns
+    -------
+        - ensemble : Ensemble()
+            The Ensemble object.
+    """
+
+    # Get the generated dyn
+    generated_name = os.path.join(directory, "dyn_gen_pop%d_" % population)
+
+    # Infer the nqirr if not provided
+    if nqirr < 0:
+        nqirr = len([x for x in os.listdir(directory) if x.startswith("dyn_gen_pop%d_" % population)])
+        if os.path.exists(generated_name + "0"):
+            nqirr -= 1
+
+    # Load the dynamical matrix
+    dyn = CC.Phonons.Phonons(generated_name, nqirr)
+
+    # Check if nqirr was correct
+    assert np.prod(dyn.GetSupercell()) == len(dyn.dynmats), "Error, the value of nqirr = {} is wrong. Check wether you specified the correct value.".format(nqirr)
+
+    ensemble = Ensemble(dyn, temperature)
+    ensemble.load_bin(directory, population)
+
+    return ensemble
+
+
 #-------------------------------------------------------------------------------
+
 def _wrapper_julia_get_upsilon_q(*args, **kwargs):
     """Worker function, just for testing"""
     return julia.Main.get_upsilon_fourier(*args, **kwargs)
