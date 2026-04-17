@@ -2,6 +2,7 @@
 """Module for handling automated calculation via aiida-quantumespresso."""
 from __future__ import annotations
 
+from typing import Literal
 from copy import copy, deepcopy
 import time
 import sys
@@ -37,7 +38,7 @@ class AiiDAEnsemble(Ensemble):
     def compute_ensemble( # pylint: disable=arguments-renamed
         self,
         pw_code: str,
-        protocol: str['fast', 'moderate', 'precise'] = 'moderate',
+        protocol: Literal['fast', 'balanced', 'stringent'] = 'balanced',
         options: dict | None  = None,
         overrides: dict | None = None,
         group_label: str | None = None,
@@ -51,7 +52,7 @@ class AiiDAEnsemble(Ensemble):
         Args:
         ----
             pw_code: The string associated with the AiiDA code for `pw.x`
-            protocol: The protocol to be used; available protocols are 'fast', 'moderate' and 'precise'
+            protocol: The protocol to be used; available protocols are 'fast', 'balanced' and 'stringent'
             options: The options for the calculations, such as the resources, wall-time, etc.
             overrides: The overrides for the :func:`aiida_quantumespresso.workflows.pw.base.PwBaseWorkChain.get_builder_from_protocol`
             group_label: The group label where to add the submitted nodes for eventual future inspection
